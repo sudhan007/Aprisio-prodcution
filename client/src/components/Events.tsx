@@ -25,15 +25,15 @@ export default function Events() {
     <section className="bg-white ">
       {/* Header section */}
       <div className="px-14 lg:pt-14  pt-7 flex justify-between items-center">
-        <h1 className="text-[#353535] lg:text-7xl text-2xl  font-roboto font-semibold">
+        <h1 className="text-[#353535] xl:text-7xl lg:text-4xl text-2xl  font-roboto font-semibold">
           Our Upcoming Events <br />
           On this Year
         </h1>
         <p className="flex flex-col text-right">
-          <span className="text-[#043A53] lg:text-6xl text-2xl font-semibold font-roboto">
+          <span className="text-[#043A53] xl:text-6xl lg:text-4xl text-2xl font-semibold font-roboto">
             2024
           </span>
-          <span className="text-[#353535CC] lg:text-xl text-xs font-sans font-semibold">
+          <span className="text-[#353535CC] xl:text-xl lg:text-base text-xs font-sans font-semibold">
             JAN - DEC
           </span>
         </p>
