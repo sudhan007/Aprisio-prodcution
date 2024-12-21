@@ -11,7 +11,7 @@ export default function About() {
                     <h1 className="font-roboto font-semibold lg:text-7xl text-2xl text-white">
                         About Aprisio
                     </h1>
-                    <p className="font-roboto lg:text-4xl text-xl lg:pt-4 pt-2 text-white">
+                    <p className="font-roboto lg:text-4xl text-xl lg:pt-4 pt-5 text-white">
                         Post career Impact & Fulfilment
                     </p>
                 </div>
@@ -23,7 +23,7 @@ export default function About() {
                 </div>
                 </div>
                <div>
-                <div className="w-full lg:h-[714px] h-[340px]  rounded-2xl">
+                <div className="w-full lg:h-[714px] h-[280px] rounded-2xl">
                 <Image src={video} alt="hero"  className="w-full h-full"/>
                 {/* <div>
                 <video

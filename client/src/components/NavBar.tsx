@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
+import logo from "../../public/images/logo.png"
 
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -51,19 +53,20 @@ export default function NavBar() {
 
   return (
     <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${bgColor}`}>
-      <div className={`flex justify-between items-center ${padding} px-4 md:px-10 lg:justify-evenly`}>
+      <div className={`flex justify-between items-center ${padding} xl:px-4 lg:px-5 md:px-10 px-5 lg:justify-evenly`}>
         <Link href={"/"}>
         <div>
-          <h1 className="font-sans text-[#043A53] font-bold text-2xl">Aprisio</h1>
+          {/* <h1 className="font-sans text-[#043A53] font-bold text-2xl">Aprisio</h1> */}
+          <Image src={logo} alt='logo' className='h-9 w-32' />
         </div>
         </Link>
      
 
         {/* Nav Links - Hidden on small screens */}
         <div className="hidden lg:block">
-          <ul className="flex gap-7 text-[#353535] font-semibold text-2xl">
+          <ul className="flex gap-7 text-[#353535] font-semibold xl:text-2xl lg:text-lg">
             <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-            <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>AboutUs</a></li>
+            <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>About Us</a></li>
             <li><a href="#events" onClick={(e) => handleNavClick(e, 'events')}>Community</a></li>
             <li><a href="#join" onClick={(e) => handleNavClick(e, 'join')}>Job</a></li>
             <li><a href="#footer" onClick={(e) => handleNavClick(e, 'footer')}>Contact</a></li>
@@ -71,9 +74,9 @@ export default function NavBar() {
         </div>
 
         {/* actions button - Hidden on small screens */}
-        <div className="hidden lg:flex gap-5 font-mulish font-semibold text-xl">
-          <button className="bg-white rounded-full py-4 px-8 shadow border-[0.5px]">Log In</button>
-          <button className="bg-[#C9A74E] rounded-full py-4 px-7">Sign Up</button>
+        <div className="hidden lg:flex gap-5 font-mulish font-semibold xl:text-xl lg:text-base">
+          <button className="bg-white rounded-full xl:py-4 xl:px-8 lg:py-3 lg:px-6 shadow border-[0.5px]">Log In</button>
+          <button className="bg-[#C9A74E] rounded-full xl:py-4 xl:px-7 lg:py-3 lg:px-6">Sign Up</button>
         </div>
 
         {/* Hamburger menu - Visible on small screens */}
