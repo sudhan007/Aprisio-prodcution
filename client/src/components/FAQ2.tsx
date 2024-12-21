@@ -14,34 +14,34 @@ export default function FAQ2() {
             <div className="absolute right-0">
                 <Image src={heart2} className="h-12 w-14" alt="hearts" />
             </div>
-            <div className="font-roboto lg:py-20 py-6 font-semibold lg:text-7xl text-2xl text-[#353535]">
+            <div className="font-roboto lg:py-20 py-6 font-semibold xl:text-7xl lg:text-5xl text-2xl text-[#353535]">
                 <h1>Why Aprisio?</h1>
             </div>
             {/* cards */}
 
-            <div className="grid lg:grid-cols-3  lg:gap-20 gap-10 relative">
+            <div className="grid lg:grid-cols-3  xl:gap-20 lg:gap-16 gap-10 relative">
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
-                    <div className="lg:h-28 rounded-full lg:w-28 bg-[#FFE4E0] h-14 w-14 flex items-center justify-center">
-                    <Image src={share} className="lg:p-10 p-4" alt="sharing" />
+                    <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#FFE4E0]  h-14 w-14 flex items-center justify-center">
+                    <Image src={share} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
                     </div>
-                    <div className="flex flex-col gap-4 lg:pt-0 pt-3">
-                        <h1 className="font-roboto font-semibold lg:text-4xl text-2xl text-[#353535]">
+                    <div className="flex flex-col gap-4 lg:pt-0 pt-3 lg:w-full w-3/4">
+                        <h1 className="font-roboto font-semibold xl:text-4xl lg:text-2xl text-2xl text-[#353535]">
                             Internet-Based Groups
                         </h1>
-                        <p className="font-sans lg:text-3xl text-xl text-[#353535CC]">
+                        <p className="font-sans xl:text-3xl lg:text-xl text-xl text-[#353535CC]">
                         Connect with like-minded individuals over topics you love.
                         </p>
                     </div>
                 </div>
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
-                    <div className="lg:h-28 rounded-full lg:w-28 bg-[#FFE7CE] h-14 w-14 flex items-center justify-center">
-                    <Image src={monitor} className="lg:p-10 p-4" alt="sharing" />
+                    <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#FFE7CE] h-14 w-14 flex items-center justify-center">
+                    <Image src={monitor} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
                     </div>
                     <div className="flex flex-col gap-4 lg:pt-0 pt-3 lg:w-full w-3/4">
-                        <h1 className="font-roboto font-semibold lg:text-4xl text-2xl text-[#353535]">
+                        <h1 className="font-roboto font-semibold xl:text-4xl lg:text-2xl text-2xl text-[#353535]">
                         Virtual and Local Interest-Based Meetups
                         </h1>
-                        <p className="font-sans lg:text-3xl text-xl text-[#353535CC]">
+                        <p className="font-sans xl:text-3xl lg:text-xl text-xl text-[#353535CC]">
                         Network virtually and in-person with like-minded individuals who share your passion.
                         </p>
                     </div>
@@ -53,37 +53,35 @@ export default function FAQ2() {
 
 
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
-                <div className="lg:h-28 rounded-full lg:w-28 bg-[#EBDEBB] h-14 w-14 flex items-center justify-center">
-                        <Image src={group} className="lg:p-10 p-4" alt="sharing" />
+                <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#EBDEBB] h-14 w-14 flex items-center justify-center">
+                        <Image src={group} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
                     </div>
                     <div className="flex flex-col gap-4 lg:pt-0 pt-3 lg:w-full w-3/4">
-                        <h1 className="font-roboto font-semibold lg:text-4xl text-2xl text-[#353535]">
+                        <h1 className="font-roboto font-semibold xl:text-4xl lg:text-2xl text-2xl text-[#353535]">
                         Supportive Community
                         </h1>
-                        <p className="font-sans lg:text-3xl text-xl text-[#353535CC]">
+                        <p className="font-sans xl:text-3xl lg:text-xl text-xl text-[#353535CC]">
                         Join a safe and friendly space to grow.
                         </p>
                     </div>
                 </div>
 
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
-                <div className="lg:h-28  hidden rounded-full lg:w-28 bg-[#EBDEBB] h-14 w-14 lg:flex items-center justify-center">
-                        <Image src={job} className="lg:p-10 p-4" alt="sharing" />
+                <div className="xl:h-28  hidden rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#EBDEBB] h-14 w-14 lg:flex items-center justify-center">
+                        <Image src={job} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
                     </div>
                     <div className="lg:hidden block ">
-                    <div className="lg:h-28 flex   rounded-full lg:w-28 bg-[#D3E6BF] h-14 w-14  items-center justify-center">
+                    <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#D3E6BF] h-14 w-14  items-center justify-center">
                         <Image src={job} className="lg:p-10 p-4" alt="sharing" />
                     </div>
                     </div>
                   
                     <div className="flex flex-col gap-4 lg:pt-0 pt-3 lg:w-full w-3/4">
-                        <h1 className="font-roboto lg:block hidden font-semibold lg:text-4xl text-2xl text-[#353535]">
+                        <h1 className="font-roboto  font-semibold xl:text-4xl lg:text-2xl text-2xl text-[#353535]">
                         Opportunities for Experienced Professionals
                         </h1>
-                        <h1 className="font-roboto lg:hidden block font-semibold lg:text-4xl text-2xl text-[#353535]">
-                        Opportunities for <br /> Experienced  Professionals
-                        </h1>
-                        <p className="font-sans lg:text-3xl text-xl text-[#353535CC]">
+                      
+                        <p className="font-sans xl:text-3xl lg:text-xl text-xl text-[#353535CC]">
                         Discover projects & assignments and jobs that value your expertise and optimize for your maturity and experience.
                         </p>
                     </div>
@@ -104,40 +102,40 @@ export default function FAQ2() {
         <Image 
             src={circle} 
             alt="circle" 
-            className="w-16 h-16 md:w-12 md:h-12" 
+            className="w-16 h-16 lg:h-10 lg:w-10  md:w-12 md:h-12" 
             priority
         />
     </div>
     <div className="absolute  top-[7%]  left-[44%] w-[50%]">
-   <h1 className="text-[#353535] text-6xl font-bold font-roboto">
+   <h1 className="text-[#353535] xl:text-6xl lg:text-4xl font-bold font-roboto">
    Our Milestone
    </h1>
-   <p className="text-[#353535CC] pt-7 text-2xl">
+   <p className="text-[#353535CC] pt-7 xl:text-2xl text-xl">
    Lorem incididunt Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. 
    </p>
     </div>
     <div className="flex absolute w-full top-[60%] justify-around">
         <div className="text-center">
-            <h1 className=" text-[#043A53] font-roboto font-semibold text-6xl">
+            <h1 className=" text-[#043A53] font-roboto font-semibold xl:text-6xl text-4xl">
                 10+
             </h1>
-            <p className="text-[#353535CC] pt-3 font-sans text-4xl">
+            <p className="text-[#353535CC] pt-3 font-sans xl:text-4xl lg:text-2xl">
 Years Experience
             </p>
         </div>
         <div className="text-center">
-            <h1 className=" text-[#043A53] font-roboto font-semibold text-6xl">
+            <h1 className=" text-[#043A53] font-roboto font-semibold xl:text-6xl text-4xl">
                 200+
             </h1>
-            <p className="text-[#353535CC] pt-3 font-sans text-4xl">
+            <p className="text-[#353535CC] pt-3 font-sans xl:text-4xl lg:text-2xl">
 Users Empowered
             </p>
         </div>
         <div className="text-center">
-            <h1 className=" text-[#043A53] font-roboto font-semibold text-6xl">
+            <h1 className=" text-[#043A53] font-roboto font-semibold xl:text-6xl text-4xl">
                 100+
             </h1>
-            <p className="text-[#353535CC] pt-3 font-sans text-4xl">
+            <p className="text-[#353535CC] pt-3 font-sans xl:text-4xl lg:text-2xl">
 Job Provided
             </p>
         </div>
