@@ -57,7 +57,7 @@ export default function NavBar() {
         <Link href={"/"}>
         <div>
           {/* <h1 className="font-sans text-[#043A53] font-bold text-2xl">Aprisio</h1> */}
-          <Image src={logo} alt='logo' className='h-9 w-32' />
+          <Image src={logo} alt='logo' className='lg:h-9 h-6 lg:w-32 w-24' />
         </div>
         </Link>
      

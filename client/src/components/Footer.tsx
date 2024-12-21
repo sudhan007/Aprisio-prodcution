@@ -67,7 +67,7 @@ export default function Footer() {
             <div className=" font-mulish text-xl bg-[#F2F5F6] text-[#043A53] lg:px-24 lg:py-7 py-3 px-3 flex md:justify-between justify-center  items-center">
                 {/* <p className="md:block hidden">Aprisio</p> */}
                 <div className="">
-                <Image src={logo} className='h-6 w-24 ' alt="logo" />
+                <Image src={logo} className='h-6 md:block hidden  w-24 ' alt="logo" />
                 </div>
                 <p className="md:text-xl text-base ">Privacy Policy , Terms & Conditions</p>
                 <p className="md:block hidden">
