@@ -12,7 +12,7 @@ export default function Hero(){
     <section className="relative lg:mt-36 mt-28 lg:h-[90vh] px-2 lg:px-0 mb-14 lg:mb-0" >
 <div className="flex  flex-col justify-center items-center">
   <div className="flex flex-col justify-center items-center w-[90%]">
-    <h1 className="font-semibold text-[#353535] text-center xl:text-[75px] lg:text-[60px] text-[24px] font-roboto">Your Carrer May Be Behind You</h1>
+    <h1 className="font-semibold text-[#353535] text-center xl:text-[75px] lg:text-[60px] text-[24px] font-roboto">Your Career May Be Behind You</h1>
     <h2 className="font-semibold text-[#353535] text-center xl:text-[60px] lg:text-[40px] text-[24px] mt-5 lg:mt-0 font-roboto">Your Best Days are Ahead of You</h2>
    <div className="w-full flex justify-center items-center">
    <p className="text-center xl:w-1/2 lg:w-[80%] w-[98%]  text-[#353535CC] leading-loose font-sans xl:text-[24px] lg:text-[20px] text-[18px]  pt-10">
