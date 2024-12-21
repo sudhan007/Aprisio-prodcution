@@ -35,15 +35,15 @@ export default function Join(){
       <div className="absolute  h-[60%] w-full md:hidden items-center  justify-center bottom-0 flex  lg:hidden">
       <Image src={retirement_md} className="w-full " alt="md Screen Image" />
       </div>
-      <div className=" text-white absolute lg:top-16 top-10 lg:left-20 lg:px-10 px-4">
-        <h1 className="font-roboto lg:text-5xl lg:w-[70%]  lg:leading-normal leading-relaxed lg:text-left text-center text-xl">
+      <div className=" text-white absolute lg:top-16 top-10 xl:left-20 lg:left-9 lg:px-10 px-4">
+        <h1 className="font-roboto xl:text-5xl lg:text-3xl lg:w-[70%]  lg:leading-normal leading-relaxed lg:text-left text-center text-xl">
         Your post career life begins today. Take the first step towards a more productive, connected and impactful life.
         </h1>
       </div>
-      <div className="absolute lg:top-[80%] md:top-64 top-72 lg:left-28 w-full">
+      <div className="absolute lg:top-[80%] md:top-64 top-72 xl:left-24 lg:left-14 w-full">
         <p className="text-[#FFFFFF] opacity-70 lg:text-left text-center  font-lato text-xl">Let’s join yourself to the community</p>
       </div>
-            <div className="absolute inset-0 flex lg:top-36 lg:left-28 md:-top-[54%]  -top-64 items-center justify-center lg:justify-start">
+            <div className="absolute inset-0 flex xl:top-36 lg:top-28 xl:left-24 lg:left-14 md:-top-[54%]  -top-64 items-center justify-center lg:justify-start">
               <Link href={"/join-community"}> 
         <span className="flex py-5 text-2xl pl-6 pr-4 font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5">
           Join Community
