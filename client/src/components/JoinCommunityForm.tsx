@@ -134,7 +134,7 @@ window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email })
         id="otpless-sdk"
         src="https://otpless.com/v4/headless.js"
         data-appid="HYRAB3PGUFKD9MFNZN2N"
-        strategy="lazyOnload"
+        strategy="beforeInteractive"
         onError={(e: Error) => {
             console.error('OTPLess Script failed to load', e)
           }}
