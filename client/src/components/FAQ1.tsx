@@ -19,15 +19,15 @@ export default function FAQ1(){
 
     <div className="lg:pt-16 pt-10 flex lg:flex-row flex-col gap-3 ">
 
-<div className="flex lg:flex-col items-start gap-5 lg:w-1/3 w-full ">
+<div className="flex lg:flex-col items-start gap-2 lg:w-1/3 w-full ">
 <div className="">
-<Image className="xl:max-w-24 xl:max-h-16 lg:max-w-16 lg:max-h-20 max-w-14 max-h-14"  src={step1} alt="step1"/>
+<Image className="xl:max-w-24 xl:max-h-24 lg:max-w-16 lg:max-h-16 max-w-14 max-h-14"  src={step1} alt="step1"/>
 </div>
 <div className=" lg:mt-0 ">
     <h1 className="text-[#353535] xl:pt-10 lg:pt-3 xl:text-4xl lg:text-2xl text-xl font-bold font-mulish">
     Create Your Profile
     </h1>
-    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-10 lg:pt-5 pt-2"> 
+    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
     Share your interests, Passion & skills.
     </p>
 </div>
@@ -47,7 +47,7 @@ export default function FAQ1(){
     <h1 className="text-[#353535] xl:pt-10 lg:pt-3 xl:text-4xl lg:text-2xl text-xl font-bold font-mulish">
     Join Groups
     </h1>
-    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-10 lg:pt-5 pt-2"> 
+    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
     Join like minded people who share your interests & Passion.
     </p>
 </div>
@@ -70,7 +70,7 @@ export default function FAQ1(){
     <h1 className="text-[#353535] xl:pt-10 lg:pt-3 xl:text-4xl lg:text-2xl text-xl font-bold font-mulish">
     Connect and Collaborate
     </h1>
-    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-10 lg:pt-5 pt-2"> 
+    <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
     Arrange virtual & in person meetups & build lasting connections.
     </p>
 </div>

@@ -1,6 +1,7 @@
 'use client';
 import Image from "next/image"
 import video from "../../public/images/video.png"
+import hero from "../../public/images/Frame 144.png"
 export default function About() {
 
     return (
@@ -23,8 +24,9 @@ export default function About() {
                 </div>
                 </div>
                <div>
-                <div className="lg:w-full  xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-2xl">
-                <Image src={video} alt="hero"  className="lg:w-full md:w-5/6 w-full h-full"/>
+                <div className="lg:w-full  xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-3xl">
+                <Image src={video} alt="hero"  className="lg:w-full md:block hidden md:w-5/6 w-full h-full"/>
+                <Image src={hero} alt="hero"  className="lg:w-full md:hidden block md:w-5/6 w-full object-contain h-full"/>
                 {/* <div>
                 <video
                         className="w-full h-full object-cover rounded-2xl"
