@@ -11,8 +11,8 @@ import heart2 from "../../public/images/heart-2.png"
 export default function FAQ2() {
     return (
         <section className="bg-[#F2F5F6] lg:px-14 px-5 lg:pb-0 pb-12">
-            <div className="absolute right-0">
-                <Image src={heart2} className="h-12 w-14" alt="hearts" />
+            <div className="absolute  right-0">
+                <Image src={heart2} className="h-12 w-12" alt="hearts" />
             </div>
             <div className="font-roboto lg:py-20 py-6 font-semibold xl:text-7xl lg:text-5xl text-2xl text-[#353535]">
                 <h1>Why Aprisio?</h1>
