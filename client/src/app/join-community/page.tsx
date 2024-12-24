@@ -8,7 +8,7 @@ export default function JoinCommunity(){
    <div className="bg-[#F2F5F6] flex w-full ">
     <div className="flex flex-col justify-between lg:w-2/3 w-full lg:gap-0 gap-16 px-5 lg:px-0 lg:pl-32 lg:py-16 py-5">
       <div className="">
-        <h1 className="font-semibold lg:text-5xl text-3xl !leading-normal lg:text-left  text-center font-mulish text-[#043A53]">
+        <h1 className="font-semibold tracking-tight lg:text-5xl text-3xl !leading-normal lg:text-left  text-center font-mulish text-[#043A53]">
         Your Second Innings Begins Today. Take the First Step Toward a More Connected and Fulfilling Life.
         </h1>
       </div>
