@@ -7,6 +7,8 @@ import job from "../../public/images/Briefcase.png";
 import rect from "../../public/images/Rectangle.png"
 import circle from "../../public/images/Ellipse.png"
 import heart2 from "../../public/images/heart-2.png"
+import arrow from "../../public/images/curveArrow.png"
+import arrowSVG from "../../public/images/Vector (1).svg"
 // import vector from "../../public/images/Vector.png"
 export default function FAQ2() {
     return (
@@ -33,6 +35,9 @@ export default function FAQ2() {
                         </p>
                     </div>
                 </div>
+                <div className="lg:hidden block absolute top-[12%] md:top-[13%] md:left-[2%] left-[4%]">
+                    <Image src={arrowSVG} alt="arrow" className="h-12  w-5" />
+                </div>
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
                     <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#FFE7CE] h-14 w-14 flex items-center justify-center">
                     <Image src={monitor} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
@@ -51,7 +56,9 @@ export default function FAQ2() {
                         <Image src={vector} className="" alt="sharing" />
                     </div> */}
 
-
+<div className="lg:hidden block absolute top-[40%] md:top-[40%] md:left-[2%] left-[4%]">
+                    <Image src={arrowSVG} alt="arrow" className="h-12 w-5" />
+                </div>
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">
                 <div className="xl:h-28 rounded-full xl:w-28 lg:h-20 lg:w-20 bg-[#EBDEBB] h-14 w-14 flex items-center justify-center">
                         <Image src={group} className="xl:p-10 lg:p-5 p-4" alt="sharing" />
@@ -64,6 +71,10 @@ export default function FAQ2() {
                         Join a safe and friendly space to grow.
                         </p>
                     </div>
+                </div>
+
+                <div className="lg:hidden block absolute top-[64%] md:top-[66%] md:left-[2%] left-[4%]">
+                    <Image src={arrowSVG} alt="arrow" className="h-12 w-5" />
                 </div>
 
                 <div className="flex lg:flex-col lg:gap-10 gap-5 items-start">

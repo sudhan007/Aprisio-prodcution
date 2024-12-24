@@ -41,7 +41,7 @@ export default function Hero() {
             </p>
           </div>
         </div>
-        <div className="pt-16">
+        <div className={`${isZoomedOut?"pt-[7%]":"pt-[2%]"}`}>
           <button className="flex lg:py-6 py-3 lg:text-2xl text-xl lg:px-9 px-5 font-mulish font-bold bg-[#C9A74E] rounded-full justify-center items-center gap-5">
             Join Aprisio
             <span className="text-white bg-[#A48D4A] rounded-full p-1">
@@ -53,7 +53,7 @@ export default function Hero() {
       {isZoomedOut && (
         <>
           <div className="absolute lg:right-[2%] lg:top-[10%] top-[55%] right-3">
-            <Image src={hearts} alt="hearts" className="lg:h-32 h-28 lg:w-[86px] w-[58px]" />
+            <Image src={hearts} alt="hearts" className="lg:h-32 h-28 lg:w-[72px] w-[58px]" />
           </div>
           <div className="absolute lg:block hidden left-[6%] top-[16%]">
             <Image src={heroboy} alt="hero2" className="h-28 w-[76px]" />
@@ -65,10 +65,10 @@ export default function Hero() {
       )}
       <div className="absolute -z-10 hidden lg:block right-0 bottom-0">
         <div className="flex justify-end">
-          <Image src={hero} alt="hero" className="lg:h-[80%] lg:w-[80%] xl:h-full xl:w-full" />
+          <Image src={hero} alt="hero" className={`${isZoomedOut?"lg:h-[80%] lg:w-[80%] xl:h-full xl:w-full":"lg:h-[80%] lg:w-[80%] xl:h-[80%] xl:w-[80%]"}`} />
         </div>
       </div>
-      <div className="lg:absolute lg:left-16 mt-16 lg:mt-0 lg:bottom-20 flex lg:flex-row flex-col items-center">
+      <div className={`lg:absolute lg:left-16 mt-16 lg:mt-0 ${isZoomedOut?"lg:bottom-[10%]":"lg:bottom-[0%]"}  flex lg:flex-row flex-col items-center`}>
         <Image src={avatar} alt="" className="xl:h-24 xl:w-80 lg:w-60 lg:h-20 w-36 h-12" />
         <div className="flex mt-5 lg:mt-0 justify-center items-center">
           <h1 className="font-bold text-[#B9932E] font-lato xl:text-6xl lg:text-4xl text-3xl px-4">

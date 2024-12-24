@@ -9,7 +9,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-coverflow";
-
+import heart1 from "../../public/images/green-heart.png"
+import heart2 from "../../public/images/yellow-heart.png"
 export default function Events() {
   const data = [
     { title: "Yoga1", src: yoga, date: "21 Jan 2024" },
@@ -22,9 +23,15 @@ export default function Events() {
   ];
 
   return (
-    <section className="bg-white ">
+    <section className="bg-white relative">
       {/* Header section */}
-      <div className="lg:px-14 px-5 lg:pt-14  pt-7 flex justify-between items-center">
+      <div className="absolute top-[0.9%] left-[1.3%] lg:top-[6%] lg:left-[2.5%] -z-2">
+<Image src={heart1} alt="heart" className="lg:w-12  lg:h-12 h-6 w-6 " />
+      </div>
+      <div className="absolute lg:top-[20%] top-[2.5%] md:left-[22%] left-[40%] lg:left-[36%] -z-2">
+<Image src={heart2} alt="heart" className="lg:w-12  lg:h-12 w-6 h-6 " />
+      </div>
+      <div className="lg:px-14 relative z-20 px-5 lg:pt-14  pt-7 flex justify-between items-center">
         <h1 className="text-[#353535] flex lg:gap-6 gap-1 flex-col xl:text-7xl lg:text-4xl text-2xl font-roboto font-semibold">
         <span>
         Our Upcoming Events 
