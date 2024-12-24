@@ -151,7 +151,7 @@ const handleSendOtp = async (email: string) => {
             console.error('OTPLess Script failed to load', e)
           }}
       ></Script>
- <Script id="otpless-init" strategy="beforeInteractive"  onError={(e: Error) => {
+ <Script id="otpless-init" strategy="lazyOnload"  onError={(e: Error) => {
           console.error('OTPLess-init Script failed to load', e)
         }}>
   {`
