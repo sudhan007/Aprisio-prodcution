@@ -48,7 +48,7 @@ export default function FAQ1(){
     Join Community
     </h1>
     <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
-    Join like minded people who share your interests & Passion.
+    Arrange virtual & in person meetups & build lasting connections.
     </p>
 </div>
 <div>
@@ -71,7 +71,7 @@ export default function FAQ1(){
     Explore Oppurtunities
     </h1>
     <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
-    Arrange virtual & in person meetups & build lasting connections.
+    Arrange virtual & in person meetups & build lasting connections.(lorem)
     </p>
 </div>
 <div>

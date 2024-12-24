@@ -15,24 +15,11 @@ export default function NavBar() {
     setIsDrawerOpen(!isDrawerOpen)
   }
 
-  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      const navbarHeight = document.querySelector('nav')?.offsetHeight || 0;
-      const offset = window.innerHeight * 0.1 + navbarHeight; // 10% of viewport height + navbar height
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
+  const handleNavClick = useCallback(() => {
     if (isDrawerOpen) {
-      toggleDrawer();
+      toggleDrawer()
     }
-  }, [isDrawerOpen]);
+  }, [isDrawerOpen])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,27 +40,35 @@ export default function NavBar() {
 
   return (
     <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${bgColor}`}>
-      <div className={`flex justify-between items-center ${padding}   px-5`}>
-        <Link href={"/"}>
-        <div>
-          {/* <h1 className="font-sans text-[#043A53] font-bold text-2xl">Aprisio</h1> */}
-          <Image src={logo} alt='logo' className='lg:h-9 h-6 lg:w-32 w-24' />
-        </div>
+      <div className={`flex justify-between items-center ${padding} px-5`}>
+        <Link href="/" passHref>
+          <div>
+            <Image src={logo} alt='logo' className='lg:h-9 h-6 lg:w-32 w-24' />
+          </div>
         </Link>
-     
 
         {/* Nav Links - Hidden on small screens */}
         <div className="hidden lg:block">
           <ul className="flex gap-7 text-[#353535] font-semibold xl:text-2xl lg:text-lg">
-            <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-            <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>About Us</a></li>
-            <li><a href="#events" onClick={(e) => handleNavClick(e, 'events')}>Community</a></li>
-            <li><a href="#join" onClick={(e) => handleNavClick(e, 'join')}>Job</a></li>
-            <li><a href="#footer" onClick={(e) => handleNavClick(e, 'footer')}>Contact</a></li>
+            <li>
+              <Link href="/#home" onClick={handleNavClick}>Home</Link>
+            </li>
+            <li>
+              <Link href="/#about" onClick={handleNavClick}>About Us</Link>
+            </li>
+            <li>
+              <Link href="/#events" onClick={handleNavClick}>Community</Link>
+            </li>
+            <li>
+              <Link href="/#join" onClick={handleNavClick}>Job</Link>
+            </li>
+            <li>
+              <Link href="/#footer" onClick={handleNavClick}>Contact</Link>
+            </li>
           </ul>
         </div>
 
-        {/* actions button - Hidden on small screens */}
+        {/* Actions button - Hidden on small screens */}
         <div className="hidden lg:flex gap-5 font-mulish font-semibold xl:text-xl lg:text-base">
           <button className="bg-white rounded-full xl:py-4 xl:px-8 lg:py-3 lg:px-6 shadow border-[0.5px]">Log In</button>
           <button className="bg-[#C9A74E] rounded-full xl:py-4 xl:px-7 lg:py-3 lg:px-6">Sign Up</button>
@@ -97,11 +92,21 @@ export default function NavBar() {
       >
         <div className="flex flex-col h-full justify-between py-6 px-4">
           <ul className="space-y-4 text-[#353535] font-semibold text-xl">
-            <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-            <li><a href="#about" onClick={(e) => handleNavClick(e, 'about')}>AboutUs</a></li>
-            <li><a href="#events" onClick={(e) => handleNavClick(e, 'events')}>Community</a></li>
-            <li><a href="#join" onClick={(e) => handleNavClick(e, 'join')}>Job</a></li>
-            <li><a href="#footer" onClick={(e) => handleNavClick(e, 'footer')}>Contact</a></li>
+            <li>
+              <Link href="/#home" onClick={handleNavClick}>Home</Link>
+            </li>
+            <li>
+              <Link href="/#about" onClick={handleNavClick}>About Us</Link>
+            </li>
+            <li>
+              <Link href="/#events" onClick={handleNavClick}>Community</Link>
+            </li>
+            <li>
+              <Link href="/#join" onClick={handleNavClick}>Job</Link>
+            </li>
+            <li>
+              <Link href="/#footer" onClick={handleNavClick}>Contact</Link>
+            </li>
           </ul>
           <div className="space-y-4 font-mulish font-semibold text-lg">
             <button className="w-full bg-white rounded-full py-3 px-6 shadow border-[0.5px]">Log In</button>
@@ -120,4 +125,3 @@ export default function NavBar() {
     </nav>
   )
 }
-

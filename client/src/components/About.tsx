@@ -25,7 +25,7 @@ export default function About() {
                 </div>
                <div>
                 <div className="lg:w-full  xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-3xl">
-                <Image src={video} alt="hero"  className="lg:w-full md:block hidden md:w-5/6 w-full h-full"/>
+                <Image src={video} alt="hero"  className="lg:w-full md:block hidden md:w-5/6 w-full object-contain h-full"/>
                 <Image src={hero} alt="hero"  className="lg:w-full md:hidden block md:w-5/6 w-full object-contain h-full"/>
                 {/* <div>
                 <video

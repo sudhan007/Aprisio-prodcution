@@ -11,12 +11,13 @@ import mail from "../../public/images/mail-icon.png";
 import Script from 'next/script';
 import { RiArrowRightLine } from 'react-icons/ri';
 import { GiCheckMark } from 'react-icons/gi';
+import {_axios} from '../lib/_axios';
 
 interface OTPlessResponse {
     success: boolean;
     message?: string;
     data?: {
-        phone?: string; // Adjust based on actual expected data structure
+        phone?: string; 
     };
 }
 
@@ -43,15 +44,17 @@ const formSchema = z.object({
 });
 
 const JoinCommunityForm = () => {
+  const [token, setToken] = useState<string | null>(null);
+  const [emailFromParams, setEmailFromParams] = useState<string | null>(null);
   const [isEmailValid, setIsEmailValid] = useState(false);
-//   const [isPhoneValid, setIsPhoneValid] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
-//   const [isLoading, setIsLoading] = useState(false);
 const [emailVerificationSent, setEmailVerificationSent] = useState(false);
+const [isVerifying, setIsVerifying] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     watch,
     formState: { errors },
   } = useForm({
@@ -61,40 +64,102 @@ const [emailVerificationSent, setEmailVerificationSent] = useState(false);
   const emailValue = watch("email");
   const phoneValue = watch("phone");
   
-  // Phone verification
-//   const handlePhoneVerifyClick = async () => {
-//     setIsLoading(true);
-//     try {
-//       window.OTPless.authenticate({
-//         phoneCallback: (response: any) => {
-//           if (response.data && response.data.phone === phoneValue) {
-//             setPhoneVerified(true);
-//           } else {
-//             alert("Phone verification failed. Please try again.");
-//           }
-//           setIsLoading(false);
-//         },
-//         phone: phoneValue,
-//       });
-//     } catch (error) {
-//       console.error("Error in phone verification:", error);
-//       alert("Failed to initiate phone verification.");
-//       setIsLoading(false);
-//     }
-//   };
 
-const handleSendOtp = async (email: string) => {
-  console.log("OTPlessSignin:", window?.OTPlessSignin);
-  if (window?.OTPlessSignin) {
-    console.log("Initiating OTP send...");
-    try {
-      await window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email });
-      setEmailVerificationSent(true); // Set this to true when email is sent
-    } catch (error) {
-      console.error("Error sending verification email:", error);
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const tokenParam = searchParams.get("token");
+    const emailParam = searchParams.get("email");
+
+    setToken(tokenParam || null);
+    setEmailFromParams(emailParam || null);
+
+    // Check local storage for aprisioEmail
+    const storedEmail = localStorage.getItem('aprisioEmail');
+    const verifiedStatus = localStorage.getItem('verified');
+    const expirationTime = localStorage.getItem('verificationExpiration');
+
+    const currentTime = new Date().getTime();
+
+    // Check if the verification has expired
+    if (expirationTime && currentTime > parseInt(expirationTime)) {
+        localStorage.removeItem('aprisioEmail');
+        localStorage.removeItem('verified');
+        localStorage.removeItem('verificationExpiration');
+        setValue("email", "");
+        setEmailVerified(false);
     }
-  } else {
-    console.error("OTPlessSignin is not available on the window object.");
+
+    // Set the email input value if aprisioEmail exists
+    if (storedEmail) {
+        setValue("email", storedEmail);
+        setEmailVerified(verifiedStatus === 'true');
+    }
+
+    // Call verifyEmail if token and emailParam are present
+    if (tokenParam && emailParam) {
+        verifyEmail(tokenParam, emailParam);
+    }
+}, [emailValue]);
+
+const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
+    try {
+        const response = await _axios.post('/verify/email/confirm', { token: tokenParam, email: emailParam });
+        const { success, message } = response.data;
+
+        if (success) {
+            // Check localStorage for matching email and update verification status
+            const storedEmail = localStorage.getItem('aprisioEmail');
+            if (storedEmail === emailParam) {
+
+                localStorage.setItem('verified', 'true');
+                const expirationTime = new Date().getTime() + 1 * 60 * 1000; // Set expiration to 5 minutes
+                localStorage.setItem('verificationExpiration', expirationTime.toString());
+                setEmailVerified(true);
+            } else {
+              console.log(emailParam,"apri",storedEmail)
+                console.error('Local storage email does not match the verified email.');
+            }
+        } else {
+            console.error('Verification failed:', message);
+        }
+    } catch (error) {
+        console.error('Error during verification:', error);
+    }
+};
+ 
+
+// const handleSendOtp = async (email: string) => {
+//   console.log("OTPlessSignin:", window?.OTPlessSignin);
+//   if (window?.OTPlessSignin) {
+//     console.log("Initiating OTP send...");
+//     try {
+//       await window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email });
+//       setEmailVerificationSent(true); // Set this to true when email is sent
+//     } catch (error) {
+//       console.error("Error sending verification email:", error);
+//     }
+//   } else {
+//     console.error("OTPlessSignin is not available on the window object.");
+//   }
+// };
+const handleSendVerification = async (email: string) => {
+  setIsVerifying(true);
+  try {
+    const response = await _axios.post('/verify/email', { email });
+    
+    // Store email verification state in localStorage
+    localStorage.setItem('aprisioEmail', email);
+    localStorage.setItem('verified', 'false');
+    
+    setEmailVerificationSent(true);
+
+    if (response.data.success) {
+      setEmailVerificationSent(true);
+    }
+  } catch (error) {
+    console.error('Error sending verification email:', error);
+  } finally {
+    setIsVerifying(false);
   }
 };
 
@@ -110,14 +175,14 @@ const handleSendOtp = async (email: string) => {
   }, [emailValue]);
 
 
-  useEffect(() => {
-    window.handleOTPlessSuccess = () => {
-        setEmailVerified(true);
-    };
-    return () => {
-        window.handleOTPlessSuccess = undefined; 
-    };
-}, []);
+//   useEffect(() => {
+//     window.handleOTPlessSuccess = () => {
+//         setEmailVerified(true);
+//     };
+//     return () => {
+//         window.handleOTPlessSuccess = undefined; 
+//     };
+// }, []);
 
 
   // Real-time phone validation
@@ -142,7 +207,7 @@ const handleSendOtp = async (email: string) => {
 
   return <>
   
-      <Script
+      {/* <Script
         id="otpless-sdk"
         src="https://otpless.com/v4/headless.js"
         data-appid="HYRAB3PGUFKD9MFNZN2N"
@@ -191,12 +256,12 @@ const handleSendOtp = async (email: string) => {
 
       window.OTPlessSignin = new OTPless(callback);
   `}
-</Script>
-    <form onSubmit={handleSubmit(onSubmit)} className="grid md:grid-cols-2 grid-cols-1 gap-8">
+</Script> */}
+    <form onSubmit={handleSubmit(onSubmit)} className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-8">
       {/* Name Input */}
       <div className="relative">
         <Image 
-          className="absolute left-7 top-10 transform -translate-y-1/2 w-7 h-7" 
+          className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-7 h-7" 
           src={user} 
           alt="" 
         />
@@ -204,7 +269,7 @@ const handleSendOtp = async (email: string) => {
           {...register("name")}
           type="text"
           placeholder="Name"
-          className={`w-full text-xl pl-20 pr-3 py-2 h-20 border ${
+          className={`w-full lg:text-xl text-sm lg:pl-20 pl-10 pr-3 py-2 lg:h-20 h-[60px] border ${
             errors.name ? 'border-red-500' : 'border-gray-300'
         } rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 `}
         />
@@ -214,27 +279,27 @@ const handleSendOtp = async (email: string) => {
       </div>
       {/* Email Input */}
       <div className="relative">
-        <Image src={mail} alt="Email" className="absolute left-7 top-10 transform -translate-y-1/2 w-7 h-7" />
+        <Image src={mail} alt="Email" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-7 h-7" />
         <input
           {...register("email")}
           type="email"
           placeholder="Email"
-          className={`w-full text-xl pl-20 py-2  pr-3 h-20 border ${
+          className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
               errors.email ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
         {isEmailValid  && (
          <button
          type="button"
-         onClick={() => handleSendOtp(emailValue)}
+         onClick={() => handleSendVerification(emailValue)}
         //  disabled={isLoading}
          className={`absolute right-3 font-semibold ${
-           emailVerified ? "bg-[#0F8040] text-white text-xl py-3 pl-4 pr-5" : "bg-[#F0B73F] py-3 px-6 text-2xl text-[#353535]"
-         } py-3 px-6 top-3 rounded-2xl font-mulish `}
+           emailVerified ? "bg-[#0F8040] text-white lg:text-xl text-base py-3 pl-4 pr-5" : "bg-[#F0B73F] md:py-3 md:px-6 px-2 py-1 text-2xl text-[#353535]"
+         } py-3 px-6 md:top-3 top-4 rounded-2xl font-mulish `}
        >
          {emailVerified ? (
            <><p className='flex gap-2 items-center'>
-<span className='p-1.5 text-base rounded-full font-extrabold bg-white text-green-700'>
+<span className='p-1.5 md:text-base text-xs rounded-full font-extrabold bg-white text-green-700'>
 <GiCheckMark />
              </span>
              <span>Verified</span>
@@ -242,7 +307,7 @@ const handleSendOtp = async (email: string) => {
              
            </>
          ) : (
-           "Verify"
+          <span className='lg:text-[20px] text-[16px]'>Verify</span>
          )}
        </button>
        
@@ -256,7 +321,7 @@ const handleSendOtp = async (email: string) => {
 
       {/* Phone Input */}
       <div className="relative">
-        <Image src={phone} alt="Phone" className="absolute left-7 top-10 transform -translate-y-1/2 w-6 h-6" />
+        <Image src={phone} alt="Phone" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-6 h-6" />
         <input
           {...register("phone")}
           type="text"
@@ -265,7 +330,7 @@ const handleSendOtp = async (email: string) => {
           onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10); 
         }}
-          className={`w-full text-xl pl-20 py-2  pr-3 h-20 border ${
+          className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
             phoneVerified ? "border-green-500" : errors.phone ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
@@ -286,12 +351,12 @@ const handleSendOtp = async (email: string) => {
 
       {/* Address Input */}
       <div className="relative">
-        <Image src={location} alt="Location" className="absolute left-7 top-10 transform -translate-y-1/2 w-7 h-7" />
+        <Image src={location} alt="Location" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-7 h-7" />
         <input
           {...register("address")}
           type="text"
           placeholder="Address"
-          className={`w-full text-xl pl-20 py-2  pr-3 h-20 border ${
+          className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
             errors.address ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
@@ -299,7 +364,7 @@ const handleSendOtp = async (email: string) => {
       </div>
 
       {/* Terms & Conditions */}
-      <div className="mt-10 md:flex md:col-span-2 justify-between">
+      <div className="mt-10 lg:flex lg:col-span-2 md:justify-between ">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
             <div className="relative">
@@ -330,7 +395,7 @@ const handleSendOtp = async (email: string) => {
             <p className="text-red-500 text-sm">{errors.terms.message?.toString()}</p>
           )}
         </div>
-        <div className="flex md:justify-end  justify-center py-10 md:py-0">
+        <div className="flex lg:justify-end  justify-center py-10 lg:py-0">
           <button 
             type="submit" 
             className="bg-[#043A53] flex gap-5 items-center text-xl text-white font-mulish font-bold py-4 px-7 rounded-full hover:bg-[#e0a93a] transition duration-300"

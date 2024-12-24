@@ -43,7 +43,7 @@ export default function Events() {
         </h1>
         <p className="flex flex-col text-right">
           <span className="text-[#043A53] xl:text-6xl lg:text-4xl text-2xl font-semibold font-roboto">
-            2024
+            2025
           </span>
           <span className="text-[#353535CC] xl:text-xl lg:text-base text-xs font-sans font-semibold">
             JAN - DEC
