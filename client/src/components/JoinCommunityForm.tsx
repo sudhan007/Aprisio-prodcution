@@ -146,7 +146,7 @@ const handleSendOtp = async (email: string) => {
         id="otpless-sdk"
         src="https://otpless.com/v4/headless.js"
         data-appid="HYRAB3PGUFKD9MFNZN2N"
-        strategy="beforeInteractive"
+        strategy="lazyOnload"
         onError={(e: Error) => {
             console.error('OTPLess Script failed to load', e)
           }}
