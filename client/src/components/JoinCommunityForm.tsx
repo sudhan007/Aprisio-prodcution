@@ -248,7 +248,7 @@ const handleSendOtp = async (email: string) => {
        
         )}
          {emailVerificationSent && !emailVerified && (
-          <p className="text-[#F0B73F] mt-2">We've sent the verification link to your given mail id. Please verify your email</p>
+          <p className="text-[#F0B73F] mt-2">We<span>&apos;</span>ve sent the verification link to your given mail id. Please verify your email</p>
         )}
         {/* {emailVerified && <p className="text-green-500">Verified</p>} */}
         {errors.email && <p className="text-red-500">{errors.email.message?.toString()}</p>}

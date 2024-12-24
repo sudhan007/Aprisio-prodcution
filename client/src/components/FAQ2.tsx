@@ -7,7 +7,6 @@ import job from "../../public/images/Briefcase.png";
 import rect from "../../public/images/Rectangle.png"
 import circle from "../../public/images/Ellipse.png"
 import heart2 from "../../public/images/heart-2.png"
-import arrow from "../../public/images/curveArrow.png"
 import arrowSVG from "../../public/images/Vector (1).svg"
 // import vector from "../../public/images/Vector.png"
 export default function FAQ2() {
