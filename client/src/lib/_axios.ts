@@ -2,13 +2,13 @@ import axios from "axios";
 import { toast } from "sonner";
 import { baseUrl } from "./config";
 
-let token = sessionStorage.getItem("token");
+// const token = sessionStorage.getItem("token");
 
 export const _axios = axios.create({
   baseURL: baseUrl,
-  headers: {
-    Authorization: `Bearer ${token}`,
-  },
+//   headers: {
+//     Authorization: `Bearer ${token}`,
+//   },
 });
 
 _axios.interceptors.response.use(

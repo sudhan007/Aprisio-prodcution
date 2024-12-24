@@ -8,7 +8,7 @@ import user from "../../public/images/user-icon.png";
 import phone from "../../public/images/phone-icon.png";
 import location from "../../public/images/location-icon.png";
 import mail from "../../public/images/mail-icon.png";
-import Script from 'next/script';
+// import Script from 'next/script';
 import { RiArrowRightLine } from 'react-icons/ri';
 import { GiCheckMark } from 'react-icons/gi';
 import {_axios} from '../lib/_axios';
@@ -44,13 +44,16 @@ const formSchema = z.object({
 });
 
 const JoinCommunityForm = () => {
-  const [token, setToken] = useState<string | null>(null);
-  const [emailFromParams, setEmailFromParams] = useState<string | null>(null);
+
+  const [, setToken] = useState<string | null>(null);
+
+  const [, setEmailFromParams] = useState<string | null>(null);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
 const [emailVerificationSent, setEmailVerificationSent] = useState(false);
-const [isVerifying, setIsVerifying] = useState(false);
+
+const [, setIsVerifying] = useState(false);
   const {
     register,
     handleSubmit,
