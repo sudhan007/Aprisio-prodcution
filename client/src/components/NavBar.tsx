@@ -53,7 +53,7 @@ export default function NavBar() {
 
   return (
     <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${bgColor}`}>
-      <div className={`flex justify-between items-center ${padding} xl:px-4 lg:px-5 md:px-10 px-5 lg:justify-evenly`}>
+      <div className={`flex justify-between items-center ${padding}   px-5`}>
         <Link href={"/"}>
         <div>
           {/* <h1 className="font-sans text-[#043A53] font-bold text-2xl">Aprisio</h1> */}

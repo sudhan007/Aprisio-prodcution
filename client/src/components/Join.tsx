@@ -1,7 +1,7 @@
 'use client';
 
 import { RiArrowRightLine } from "react-icons/ri"
-import joinBg from "../../public/images/join-bg.png"
+import joinBg from "../../public/images/blackbg.png"
 import Image from "next/image"
 import joinSmall from "../../public/images/JoinTab.png"
 import joinTab from "../../public/images/JoinTab.png"
@@ -15,7 +15,30 @@ export default function Join(){
              <div className="relative hidden lg:block  ">
         <Image src={joinBg} className="w-full h-[560px]" alt="Large Screen Image" />
       </div>
+      <div className="absolute hidden -top-12 -right-12 lg:block">
+        <div className="rounded-full z-10 bg-[#F0B73FE3] w-40 h-40">
+<div>
+</div>
 
+        </div>
+
+      </div>
+      <div className="absolute hidden -top-12 -right-12 lg:block">
+        <div className="rounded-full z-10 bg-[#F0B73FB2] h-36 w-36">
+<div>
+</div>
+
+        </div>
+
+      </div>
+      <div className="absolute hidden -top-12 -right-12 lg:block">
+        <div className="rounded-full z-10 bg-[#F0B73F] h-[120px] w-[120px]">
+<div>
+</div>
+
+        </div>
+
+      </div>
       {/* Medium Screen */}
       <div className="relative hidden md:block lg:hidden">
         <Image src={joinTab} className="w-full h-[780px]" alt="Medium Screen Image" />
@@ -35,8 +58,8 @@ export default function Join(){
       <div className="absolute  h-[60%] w-full md:hidden items-center  justify-center bottom-0 flex  lg:hidden">
       <Image src={retirement_md} className="w-full " alt="md Screen Image" />
       </div>
-      <div className=" text-white absolute lg:top-16 top-10 xl:left-20 lg:left-9 lg:px-10 px-4">
-        <h1 className="font-roboto xl:text-5xl lg:text-3xl lg:w-[70%]  lg:leading-normal leading-relaxed lg:text-left text-center text-xl">
+      <div className=" text-white absolute lg:top-16 top-10 xl:left-16 lg:left-9 lg:px-10 px-4">
+        <h1 className="font-roboto xl:text-5xl lg:text-3xl lg:w-[70%]  lg:leading-normal !leading-relaxed lg:text-left text-center text-xl">
         Your post career life begins today. Take the first step towards a more productive, connected and impactful life.
         </h1>
       </div>

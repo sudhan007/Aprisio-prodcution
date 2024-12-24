@@ -48,6 +48,7 @@ const JoinCommunityForm = () => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
 //   const [isLoading, setIsLoading] = useState(false);
+const [emailVerificationSent, setEmailVerificationSent] = useState(false);
   const {
     register,
     handleSubmit,
@@ -83,7 +84,18 @@ const JoinCommunityForm = () => {
 //   };
 
 const handleSendOtp = async (email: string) => {
-window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email })
+  console.log("OTPlessSignin:", window?.OTPlessSignin);
+  if (window?.OTPlessSignin) {
+    console.log("Initiating OTP send...");
+    try {
+      await window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email });
+      setEmailVerificationSent(true); // Set this to true when email is sent
+    } catch (error) {
+      console.error("Error sending verification email:", error);
+    }
+  } else {
+    console.error("OTPlessSignin is not available on the window object.");
+  }
 };
 
   useEffect(() => {
@@ -134,7 +146,7 @@ window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email })
         id="otpless-sdk"
         src="https://otpless.com/v4/headless.js"
         data-appid="HYRAB3PGUFKD9MFNZN2N"
-        strategy="lazyOnload"
+        strategy="beforeInteractive"
         onError={(e: Error) => {
             console.error('OTPLess Script failed to load', e)
           }}
@@ -234,6 +246,9 @@ window?.OTPlessSignin?.initiate({ channel: "EMAIL", email: email })
          )}
        </button>
        
+        )}
+         {emailVerificationSent && !emailVerified && (
+          <p className="text-[#F0B73F] mt-2">We've sent the verification link to your given mail id. Please verify your email</p>
         )}
         {/* {emailVerified && <p className="text-green-500">Verified</p>} */}
         {errors.email && <p className="text-red-500">{errors.email.message?.toString()}</p>}

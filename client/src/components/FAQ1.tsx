@@ -19,7 +19,7 @@ export default function FAQ1(){
 
     <div className="lg:pt-16 pt-10 flex lg:flex-row flex-col gap-3 ">
 
-<div className="flex lg:flex-col items-start gap-2 lg:w-1/3 w-full ">
+<div className="flex lg:flex-col items-start gap-5 lg:w-1/3 w-full ">
 <div className="">
 <Image className="xl:max-w-24 xl:max-h-24 lg:max-w-16 lg:max-h-16 max-w-14 max-h-14"  src={step1} alt="step1"/>
 </div>
@@ -32,8 +32,8 @@ export default function FAQ1(){
     </p>
 </div>
 </div>
-<div className="pr-10 lg:block hidden">
-    <Image className="xl:h-16 xl:w-16 lg:h-12 lg:w-12"  src={arrow} alt=""/>
+<div className="pr-10 pt-6 lg:block hidden">
+    <Image className="xl:max-h-16 xl:max-w-16 lg:h-12 lg:w-12"  src={arrow} alt=""/>
 </div>
 <div className="pl-4 pb-4 lg:hidden block">
     <Image className="h-6 w-6"  src={arrowDown} alt=""/>
@@ -45,7 +45,7 @@ export default function FAQ1(){
 </div>
 <div className=" lg:mt-0">
     <h1 className="text-[#353535] xl:pt-10 lg:pt-3 xl:text-4xl lg:text-2xl text-xl font-bold font-mulish">
-    Join Groups
+    Join Community
     </h1>
     <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
     Join like minded people who share your interests & Passion.
@@ -56,8 +56,8 @@ export default function FAQ1(){
 </div>
 </div>
 
-<div className="pr-10 lg:block hidden">
-    <Image className="xl:h-16 xl:w-16 lg:h-12 lg:w-12"  src={arrow} alt=""/>
+<div className="pr-10 pt-6 lg:block hidden">
+    <Image className="xl:max-h-16 xl:max-w-16 lg:h-12 lg:w-12"  src={arrow} alt=""/>
 </div>
 <div className="pl-4 pb-4 lg:hidden block">
     <Image className="h-6 w-6"  src={arrowDown} alt=""/>
@@ -68,7 +68,7 @@ export default function FAQ1(){
 </div>
 <div className=" lg:mt-0">
     <h1 className="text-[#353535] xl:pt-10 lg:pt-3 xl:text-4xl lg:text-2xl text-xl font-bold font-mulish">
-    Connect and Collaborate
+    Explore Oppurtunities
     </h1>
     <p className="font-mulish xl:text-3xl lg:text-xl text-xl text-[#353535CC] xl:pt-5 lg:pt-3 pt-1"> 
     Arrange virtual & in person meetups & build lasting connections.
