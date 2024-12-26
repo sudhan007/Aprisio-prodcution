@@ -7,11 +7,14 @@ import Hero from "../components/Hero";
 import NavBar from "../components/NavBar";
 import Testimonial from "../components/Testimonials";
 import Join from "../components/Join"
+import { ToastContainer } from 'react-toastify';
+
 
 export default function Home() {
   return (
     <>
       <NavBar />
+      <ToastContainer />
       <div id="home">
         <Hero />
       </div>

@@ -5,19 +5,21 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import user from "../../public/images/user-icon.png";
-import phone from "../../public/images/phone-icon.png";
+import mobile from "../../public/images/phone-icon.png";
 import location from "../../public/images/location-icon.png";
 import mail from "../../public/images/mail-icon.png";
 // import Script from 'next/script';
 import { RiArrowRightLine } from 'react-icons/ri';
 import { GiCheckMark } from 'react-icons/gi';
 import {_axios} from '../lib/_axios';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 interface OTPlessResponse {
     success: boolean;
     message?: string;
     data?: {
-        phone?: string; 
+        mobile?: string; 
     };
 }
 
@@ -26,7 +28,7 @@ declare global {
     interface Window {
         OTPlessSignin: {
             initiate: (params: { channel: string; email: string }) => Promise<OTPlessResponse>;
-            authenticate: (params: { phoneCallback: (response: OTPlessResponse) => void; phone: string }) => void;
+            authenticate: (params: { mobileCallback: (response: OTPlessResponse) => void; mobile: string }) => void;
         };
         handleOTPlessSuccess?: () => void;
     }
@@ -36,21 +38,21 @@ declare global {
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email"),
-  phone: z.string()
+  mobile: z.string()
     .regex(/^\d+$/, "Only numbers are allowed")
-    .length(10, "Phone number must be exactly 10 digits"),
+    .length(10, "mobile number must be exactly 10 digits"),
   address: z.string().min(5, "Address must be at least 5 characters"),
   terms: z.boolean().refine(val => val === true, "You must accept terms and conditions"),
 });
 
 const JoinCommunityForm = () => {
 
-  const [, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
-  const [, setEmailFromParams] = useState<string | null>(null);
+  const [emailFromParams, setEmailFromParams] = useState<string | null>(null);
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
-  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [mobileVerified, setmobileVerified] = useState(false);
 const [emailVerificationSent, setEmailVerificationSent] = useState(false);
 
 const [, setIsVerifying] = useState(false);
@@ -59,50 +61,57 @@ const [, setIsVerifying] = useState(false);
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formSchema),
   });
 
   const emailValue = watch("email");
-  const phoneValue = watch("phone");
+  const mobileValue = watch("mobile");
   
 
+
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const tokenParam = searchParams.get("token");
-    const emailParam = searchParams.get("email");
+    // Check if the URL contains search parameters
+    const searchParams = new URLSearchParams(window?.location?.search);
 
-    setToken(tokenParam || null);
-    setEmailFromParams(emailParam || null);
+    if (searchParams.toString()) { // Check if search query exists
+        const tokenParam = searchParams.get("token");
+        const emailParam = searchParams.get("email");
 
-    // Check local storage for aprisioEmail
-    const storedEmail = localStorage.getItem('aprisioEmail');
-    const verifiedStatus = localStorage.getItem('verified');
-    const expirationTime = localStorage.getItem('verificationExpiration');
+        setToken(tokenParam || null);
+        setEmailFromParams(emailParam || null);
 
-    const currentTime = new Date().getTime();
+        const storedName = localStorage.getItem('name');
+        const storedAddress = localStorage.getItem('address');
+        const storedMobile = localStorage.getItem('mobile');
+        // Check local storage for aprisioEmail
+        const storedEmail = localStorage.getItem('aprisioEmail');
+        const verifiedStatus = localStorage.getItem('verified');
+        // const expirationTime = localStorage.getItem('verificationExpiration');
 
-    // Check if the verification has expired
-    if (expirationTime && currentTime > parseInt(expirationTime)) {
-        localStorage.removeItem('aprisioEmail');
-        localStorage.removeItem('verified');
-        localStorage.removeItem('verificationExpiration');
-        setValue("email", "");
-        setEmailVerified(false);
+        // const currentTime = new Date().getTime();
+        // Set the email input value if aprisioEmail exists
+        if (storedName) setValue("name", storedName);
+        if (storedAddress) setValue("address", storedAddress);
+        if (storedMobile) setValue("mobile", storedMobile);
+        if (storedEmail) {
+            setValue("email", storedEmail);
+            setEmailVerified(verifiedStatus === 'true');
+        }
+
+        // Call verifyEmail if token and emailParam are present
+        if (tokenParam && emailParam) {
+            verifyEmail(tokenParam, emailParam);
+        }
     }
+},[token, emailFromParams]); 
 
-    // Set the email input value if aprisioEmail exists
-    if (storedEmail) {
-        setValue("email", storedEmail);
-        setEmailVerified(verifiedStatus === 'true');
-    }
+const handleInputChange = (field: string, value: string) => {
+  localStorage.setItem(field, value);
+};
 
-    // Call verifyEmail if token and emailParam are present
-    if (tokenParam && emailParam) {
-        verifyEmail(tokenParam, emailParam);
-    }
-}, [emailValue]);
 
 const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
     try {
@@ -110,14 +119,26 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
         const { success, message } = response.data;
 
         if (success) {
-            // Check localStorage for matching email and update verification status
+           
             const storedEmail = localStorage.getItem('aprisioEmail');
             if (storedEmail === emailParam) {
 
                 localStorage.setItem('verified', 'true');
-                const expirationTime = new Date().getTime() + 1 * 60 * 1000; // Set expiration to 5 minutes
-                localStorage.setItem('verificationExpiration', expirationTime.toString());
+                // const expirationTime = new Date().getTime() + 1 * 60 * 1000; 
+                // localStorage.setItem('verificationExpiration', expirationTime.toString());
                 setEmailVerified(true);
+                const timeoutId = setTimeout(() => {
+                  setEmailVerified(false);
+                  setValue("email", ""); // Clear the email input
+                  localStorage.removeItem('aprisioEmail');
+                  localStorage.removeItem('verified');
+                  localStorage.removeItem('name');
+                  localStorage.removeItem('address');
+                  localStorage.removeItem('mobile');
+              }, 5 * 60 * 1000); 
+
+              // Cleanup function to clear the timeout if the component unmounts
+              return () => clearTimeout(timeoutId);
             } else {
               console.log(emailParam,"apri",storedEmail)
                 console.error('Local storage email does not match the verified email.');
@@ -188,25 +209,42 @@ const handleSendVerification = async (email: string) => {
 // }, []);
 
 
-  // Real-time phone validation
+  // Real-time mobile validation
   useEffect(() => {
-    if (phoneValue) {
-      const isValid = phoneValue.length === 10 && /^\d+$/.test(phoneValue);
-    //   setIsPhoneValid(isValid);
-      if (!isValid) setPhoneVerified(false);
+    if (mobileValue) {
+      const isValid = mobileValue.length === 10 && /^\d+$/.test(mobileValue);
+    //   setIsmobileValid(isValid);
+      if (!isValid) setmobileVerified(false);
     } else {
-    //   setIsPhoneValid(false);
-      setPhoneVerified(false);
+    //   setIsmobileValid(false);
+      setmobileVerified(false);
     }
-  }, [phoneValue]);
+  }, [mobileValue]);
 
-  const onSubmit = (data: object) => {
-    if (!emailVerified || !phoneVerified) {
-      alert("Please verify both email and phone number before submitting.");
-      return;
+  const onSubmit = async (data: object) => {
+    if (!emailVerified) {
+        toast.error("Please verify your email before submitting.");
+        return;
     }
-    console.log("Form data submitted:", data);
-  };
+    
+    try {
+        const response = await _axios.post('/form/submit', data);
+        if (response.status===200) {
+          toast.success(response.data.message);
+          localStorage.removeItem('aprisioEmail');
+          localStorage.removeItem('verified');
+          localStorage.removeItem('name');
+          localStorage.removeItem('address');
+          localStorage.removeItem('mobile');
+          reset();
+      } else {
+          toast.error(response.data.message);
+      }      
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        toast.error("Failed to submit the form. Please try again.");
+    }
+};
 
   return <>
   
@@ -260,7 +298,8 @@ const handleSendVerification = async (email: string) => {
       window.OTPlessSignin = new OTPless(callback);
   `}
 </Script> */}
-    <form onSubmit={handleSubmit(onSubmit)} className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-8">
+<ToastContainer />
+    <form onSubmit={handleSubmit(onSubmit)} className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 md:gap-8 gap-10">
       {/* Name Input */}
       <div className="relative">
         <Image 
@@ -271,13 +310,14 @@ const handleSendVerification = async (email: string) => {
         <input
           {...register("name")}
           type="text"
+          onChange={(e) => handleInputChange('name', e.target.value)} 
           placeholder="Name"
           className={`w-full lg:text-xl text-sm lg:pl-20 pl-10 pr-3 py-2 lg:h-20 h-[60px] border ${
             errors.name ? 'border-red-500' : 'border-gray-300'
         } rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 `}
         />
         {errors?.name && (
-          <p className="text-red-500 mt-1">{errors.name.message?.toString()}</p>
+          <p className="text-red-500 absolute mt-1">{errors.name.message?.toString()}</p>
         )}
       </div>
       {/* Email Input */}
@@ -297,15 +337,15 @@ const handleSendVerification = async (email: string) => {
          onClick={() => handleSendVerification(emailValue)}
         //  disabled={isLoading}
          className={`absolute right-3 font-semibold ${
-           emailVerified ? "bg-[#0F8040] text-white lg:text-xl text-base py-3 pl-4 pr-5" : "bg-[#F0B73F] md:py-3 md:px-6 px-2 py-1 text-2xl text-[#353535]"
-         } py-3 px-6 md:top-3 top-4 rounded-2xl font-mulish `}
+           emailVerified ? "bg-[#0F8040] text-white lg:text-xl text-base lg:py-3 py-0.5  lg:pl-4 lg:pr-5 pr-3 pl-2" : "bg-[#F0B73F] lg:py-3 lg:px-6 px-2 py-0.5 text-2xl text-[#353535]"
+         } py-3 px-6 lg:top-3  top-[18%] rounded-2xl font-mulish `}
        >
          {emailVerified ? (
-           <><p className='flex gap-2 items-center'>
-<span className='p-1.5 md:text-base text-xs rounded-full font-extrabold bg-white text-green-700'>
+           <><p className='flex lg:gap-2 gap-1 items-center'>
+<span className='lg:p-1.5 p-1 md:text-base text-xs rounded-full font-extrabold bg-white text-green-700'>
 <GiCheckMark />
              </span>
-             <span>Verified</span>
+             <span className='lg:text-[20px] text-[16px]'>Verified</span>
            </p>
              
            </>
@@ -316,40 +356,41 @@ const handleSendVerification = async (email: string) => {
        
         )}
          {emailVerificationSent && !emailVerified && (
-          <p className="text-[#F0B73F] mt-2">We<span>&apos;</span>ve sent the verification link to your given mail id. Please verify your email</p>
+          <p className="text-[#F0B73F] absolute mt-1 text-xs lg:text-sm">We<span>&apos;</span>ve sent the verification link to your given mail id. Please verify your email</p>
         )}
         {/* {emailVerified && <p className="text-green-500">Verified</p>} */}
-        {errors.email && <p className="text-red-500">{errors.email.message?.toString()}</p>}
+        {errors?.email && <p className="absolute text-red-500">{errors.email.message?.toString()}</p>}
       </div>
 
-      {/* Phone Input */}
+      {/* mobile Input */}
       <div className="relative">
-        <Image src={phone} alt="Phone" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-6 h-6" />
+        <Image src={mobile} alt="mobile" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-6 h-6" />
         <input
-          {...register("phone")}
+          {...register("mobile")}
+          onChange={(e) => handleInputChange('mobile', e.target.value)} 
           type="text"
-          placeholder="Phone"
+          placeholder="mobile"
           inputMode="numeric"
           onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
             e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10); 
         }}
           className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
-            phoneVerified ? "border-green-500" : errors.phone ? "border-red-500" : "border-gray-300"
+            mobileVerified ? "border-green-500" : errors.mobile ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
-        {/* {isPhoneValid && !phoneVerified && (
+        {/* {ismobileValid && !mobileVerified && (
           <button
             type="button"
                    inputMode="numeric"
-            onClick={handlePhoneVerifyClick}
+            onClick={handlemobileVerifyClick}
             disabled={isLoading}
             className="absolute right-5 top-5 text-green-600"
           >
             {isLoading ? "Verifying..." : "Verify"}
           </button>
         )} */}
-        {/* {phoneVerified && <p className="text-green-500">Verified</p>} */}
-        {errors.phone && <p className="text-red-500">{errors.phone.message?.toString()}</p>}
+        {/* {mobileVerified && <p className="text-green-500">Verified</p>} */}
+        {errors?.mobile && <p className="text-red-500 absolute">{errors.mobile.message?.toString()}</p>}
       </div>
 
       {/* Address Input */}
@@ -358,12 +399,13 @@ const handleSendVerification = async (email: string) => {
         <input
           {...register("address")}
           type="text"
+          onChange={(e) => handleInputChange('address', e.target.value)} 
           placeholder="Address"
           className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
             errors.address ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
-        {errors.address && <p className="text-red-500">{errors.address.message?.toString()}</p>}
+        {errors.address && <p className="text-red-500 absolute">{errors.address.message?.toString()}</p>}
       </div>
 
       {/* Terms & Conditions */}
