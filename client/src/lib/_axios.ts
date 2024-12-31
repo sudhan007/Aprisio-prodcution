@@ -1,6 +1,6 @@
 import axios from "axios";
-import { toast } from "sonner";
 import { baseUrl } from "./config";
+import { toast } from "react-toastify";
 
 // const token = sessionStorage.getItem("token");
 
