@@ -13,7 +13,7 @@ import { RiArrowRightLine } from 'react-icons/ri';
 import { GiCheckMark } from 'react-icons/gi';
 import {_axios} from '../lib/_axios';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { AxiosError } from 'axios';
 
 interface OTPlessResponse {
     success: boolean;
@@ -240,12 +240,16 @@ const handleSendVerification = async (email: string) => {
         } else {
             toast.error(response.data.message);
         }
-    } catch (error:any) {
-        console.error('Error submitting form:', error);
-        const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
-        toast.error(errorMessage);
+    } catch (error) {
+        if (error instanceof AxiosError) {
+            const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
+            toast.error(errorMessage);
+        } else {
+            console.error('Unexpected error:', error);
+            toast.error('An unexpected error occurred.');
+        }
     }
-};
+}
 
 
   return <>
