@@ -226,25 +226,27 @@ const handleSendVerification = async (email: string) => {
         toast.error("Please verify your email before submitting.");
         return;
     }
-    
+
     try {
         const response = await _axios.post('/form/submit', data);
-        if (response.status===200) {
-          toast.success(response.data.message);
-          localStorage.removeItem('aprisioEmail');
-          localStorage.removeItem('verified');
-          localStorage.removeItem('name');
-          localStorage.removeItem('address');
-          localStorage.removeItem('mobile');
-          reset();
-      } else {
-          toast.error(response.data.message);
-      }      
-    } catch (error) {
+        if (response.status === 200) {
+            toast.success(response.data.message);
+            localStorage.removeItem('aprisioEmail');
+            localStorage.removeItem('verified');
+            localStorage.removeItem('name');
+            localStorage.removeItem('address');
+            localStorage.removeItem('mobile');
+            reset();
+        } else {
+            toast.error(response.data.message);
+        }
+    } catch (error:any) {
         console.error('Error submitting form:', error);
-        toast.error("Failed to submit the form. Please try again.");
+        const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
+        toast.error(errorMessage);
     }
 };
+
 
   return <>
   
