@@ -29,7 +29,7 @@ export const verifyController = new Elysia({
             const token = jwt.sign({ email }, SECRET_KEY, { expiresIn: "1h" });
 
             // Generate verification link
-            const verificationLink = `http://192.168.0.205:3001/join-community?token=${token}&email=${encodeURIComponent(email)}`;
+            const verificationLink = `https://aprisio-prodcution.vercel.app/join-community?token=${token}&email=${encodeURIComponent(email)}`;
 
             // Send email
             await transporter.sendMail({
