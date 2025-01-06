@@ -10,7 +10,7 @@
 	import { tick } from 'svelte';
 
 	async function fetchUsers(limit = 10, page = 1, search = '') {
-		const res = await _axios.get(`/users/all?limit=${limit}&page=${page}&q=${search}`);
+		const res = await _axios.get(`/user/all?limit=${limit}&page=${page}&q=${search}`);
 		const data = await res.data;
 		return data;
 	}
@@ -41,7 +41,8 @@
 			<Input
 				type={'text'}
 				required
-				class="pr-10"
+
+				  class="pr-10  focus:!ring-0 focus:!ring-transparent"
 				placeholder={'Search Users Name'}
 				bind:value={search}
 				oninput={debounceSearch}
@@ -87,12 +88,12 @@
 						<Table.Cell>{i + 1 + (page - 1) * limit}</Table.Cell>
 						<Table.Cell class="capitalize ">
 							<button
-								class="cursor-pointer capitalize underline underline-offset-4 text-[#fd8d27]"
+								class="cursor-pointer capitalize underline underline-offset-4 text-primary"
 								onclick={() => {
-									goto(`/hidden-admin-base-007/dashboard/users/${user._id}`);
+									goto(`/admin/dashboard/users/${user._id}`);
 								}}
 							>
-								{user.username}
+								{user.name}
 							</button>
 						</Table.Cell>
 						<Table.Cell>{user.mobile}</Table.Cell>
@@ -101,8 +102,10 @@
 						<Table.Cell>{user.active ? 'Yes' : 'No'}</Table.Cell>
 
 						<Table.Cell>
-							<button onclick={() => {}}>
-								<Icon icon={'solar:eye-broken'} class="hover:text-red-500 text-xl" />
+							<button onclick={() => {
+								goto(`/admin/dashboard/users/${user._id}`);
+							}}>
+								<Icon icon={'solar:eye-broken'} class="hover:text-primary text-xl" />
 							</button>
 						</Table.Cell>
 					</Table.Row>

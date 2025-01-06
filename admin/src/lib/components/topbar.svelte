@@ -1,43 +1,58 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { _axios } from '$lib/_axios';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as Popover from '$lib/components/ui/popover';
+	import { onMount } from 'svelte';
+	import { writableGlobalStore, loadAdminData } from '$lib/stores/global-store'; // Import store
 	import { imgUrl } from '$lib/config';
-	import { writableGlobalStore } from '$lib/stores/global-store';
-	import Icon from '@iconify/svelte';
-	import { createInfiniteQuery, createMutation } from '@tanstack/svelte-query';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Avatar from './ui/avatar';
-
-	function formatDate(dateString: string | number | Date) {
-		const date = new Date(dateString);
-		const day = date.getDate();
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-		const hours = date.getHours() % 12 || 12;
-		const minutes = date.getMinutes().toString().padStart(2, '0');
-		const ampm = date.getHours() >= 12 ? 'pm' : 'am';
-		return `${day}/${month}/${year}, ${hours}:${minutes}${ampm}`;
-	}
-
-	// Logout mutation
+	import { goto } from '$app/navigation';
+	import { createMutation } from '@tanstack/svelte-query';
+	import { _axios } from '$lib/_axios';
+	// Load the admin data from localStorage when the component mounts
+	onMount(() => {
+	  loadAdminData(); // Populate the store with the initial admin data
+	});
 	const logoutMutation = createMutation({
 		mutationFn: () => _axios.post('/auth/logout'),
 		onSuccess() {
-			localStorage.removeItem('restaurent');
-			goto('/hidden-admin-base-007');
+			localStorage.removeItem('admin');
+			localStorage.removeItem('token');
+			goto('/admin');
 		}
 	});
 
 	function logout() {
 		$logoutMutation.mutate();
 	}
-</script>
-
-<div
-	class="bg-primary flex items-center justify-start min-h-[65px] border-[#9faf8e] border-l-[1px]"
->
+  </script>
+  
+<!-- In the template, use $writableGlobalStore to subscribe to the store value -->
+<div class="bg-primary flex items-center justify-start min-h-[65px] border-[#9faf8e] border-l-[1px]">
 	<div class="ml-auto pr-5 flex text-white gap-2 items-center">
-	Hello to Dashboard
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger>
+				<Avatar.Root class="mx-4 cursor-pointer">
+					<Avatar.Image
+					src="{imgUrl}{$writableGlobalStore.adminDetails.profileImage}"
+						alt="Profile"
+						class="object-cover"
+					></Avatar.Image>
+					<Avatar.Fallback class="text-white">KC</Avatar.Fallback>
+				</Avatar.Root>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content>
+				<DropdownMenu.Group>
+					<DropdownMenu.GroupHeading>Account</DropdownMenu.GroupHeading>
+					<DropdownMenu.Separator></DropdownMenu.Separator>
+					<DropdownMenu.Item
+						onclick={() => {
+							goto('/admin/dashboard/settings');
+						}}>Settings</DropdownMenu.Item
+					>
+					<DropdownMenu.Item onclick={() => logout()}>Logout</DropdownMenu.Item>
+				</DropdownMenu.Group>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	</div>
-</div>
+  </div>
+  
+  

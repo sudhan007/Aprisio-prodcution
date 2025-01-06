@@ -9,7 +9,7 @@
 	import { createQuery } from '@tanstack/svelte-query';
 
 	async function fetchUser(id: string) {
-		const res = await _axios.get(`/users/${id}`);
+		const res = await _axios.get(`/user/${id}`);
 		const data = await res.data;
 		return data;
 	}
@@ -69,7 +69,13 @@
 					})}
 				</p>
 
+				<div class="flex mt-4">
+					<h1 class="text-muted-foreground text-2xl flex gap-2 items-center"><Icon icon="fluent:person-48-regular" class="text-lg" />
+{user.name}
+					</h1>
+				</div>
 				<div class="flex gap-2 items-center mt-4">
+					
 					<p class="text-muted-foreground flex gap-2 items-center">
 						<Icon icon="fluent:call-48-regular" class="text-lg" />
 						{user.mobile}
@@ -84,9 +90,6 @@
 					</p>
 				</div>
 
-				<div class="flex gap-2 items-center mt-4">
-					<p class="text-muted-foreground">Preffered Cusine: {user.prefferedCusine}</p>
-				</div>
 			</div>
 			<div>
 				<Button size="sm" onclick={() => history.back()}>
@@ -96,52 +99,5 @@
 			</div>
 		</div>
 
-		<div class="overflow-x-auto">
-			<h2 class="text-3xl font-bold">Order History</h2>
-			<Table.Root>
-				{#if $orderHistoryQuery.isLoading}
-					<Table.Caption>Loading....</Table.Caption>
-				{:else if $orderHistoryQuery?.data?.total === 0}
-					<Table.Caption class="text-center w-full text-xs">No Orders Found!</Table.Caption>
-				{/if}
-				<Table.Header>
-					<Table.Row>
-						<Table.Head class="w-[100px]">Sl.No</Table.Head>
-						<Table.Head class="cursor-pointer">Order Id</Table.Head>
-
-						<Table.Head>Amount</Table.Head>
-						<Table.Head>Status</Table.Head>
-					</Table.Row>
-				</Table.Header>
-				<Table.Body>
-					{#each $orderHistoryQuery.data?.orders || [] as order, i}
-						<Table.Row>
-							<Table.Cell>{i + 1 + (_page - 1) * limit}</Table.Cell>
-							<Table.Cell
-								class="cursor-pointer  underline underline-offset-4 text-[#fd8d27]"
-								onclick={() => viewOrder(order._id)}>{order?.orderId}</Table.Cell
-							>
-							<Table.Cell
-								>{order?.totalPrice - order.couponDiscount + order.deliveryPrice} ₹</Table.Cell
-							>
-							<Table.Cell class="capitalize">{order?.status}</Table.Cell>
-						</Table.Row>
-					{/each}
-				</Table.Body>
-			</Table.Root>
-		</div>
-
-		{#if !$orderHistoryQuery.isLoading && $orderHistoryQuery?.data?.total > 0}
-			<Paginator
-				total={$orderHistoryQuery?.data?.total || 0}
-				{limit}
-				page={_page}
-				callback={(newPage: any) => {
-					if (_page === newPage) return;
-					_page = newPage;
-					$orderHistoryQuery.refetch();
-				}}
-			/>
-		{/if}
 	{/if}
 </div>

@@ -19,28 +19,18 @@
 			type: 'heading',
 			name: 'Dashboard'
 		},
-		{
-			name: 'Master',
-			href: '/hidden-admin-base-007/dashboard/master/',
-			icon: 'material-symbols-light:dashboard',
-			subRoutes: '-'
-		},
+		// {
+		// 	name: 'Master',
+		// 	href: '/hidden-admin-base-007/dashboard/master/',
+		// 	icon: 'material-symbols-light:dashboard',
+		// 	subRoutes: '-'
+		// },
 		{
 			name: 'Users',
 			href: '/admin/dashboard/users/',
 			icon: 'meteor-icons:user',
 			subRoutes: '-'
 		},
-		{
-			type: 'heading',
-			name: 'Utils'
-		},
-		{
-			name: 'Privacy Policy',
-			href: '/hidden-admin-base-007/dashboard/privacy-policy/',
-			icon: 'ic:sharp-privacy-tip',
-			subRoutes: '-'
-		}
 	]);
 
 	function logout() {

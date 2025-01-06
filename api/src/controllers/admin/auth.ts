@@ -83,3 +83,25 @@ export const adminAuthController = new Elysia({
       }),
     }
   )
+  .post(
+    "/logout",
+    async ({ set }) => {
+      set.status = 200;
+      set.cookie = {
+        admin: {
+          value: "",
+          httpOnly: true,
+          secure: true,
+          sameSite: "lax",
+          path: "/",
+          expires: new Date(Date.now() - 1000 * 60 * 60 * 24),
+        },
+      };
+      return { message: "Logout Successful" };
+    },
+    {
+      detail: {
+        summary: "Admin panel logout",
+      },
+    }
+  );
