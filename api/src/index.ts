@@ -3,7 +3,7 @@ import { config } from 'dotenv';
 
 config(); 
 
-const PORT = 4000
+const PORT = 3000
 
 
 app.listen({ port: PORT }, () => {

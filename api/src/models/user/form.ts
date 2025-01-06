@@ -32,4 +32,4 @@ const FormSchema = new Schema(
   { timestamps: true }
 );
 
-export const FormModel = model("Form", FormSchema);
+export const FormModel = model("User", FormSchema);

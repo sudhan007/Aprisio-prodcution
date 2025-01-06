@@ -9,7 +9,7 @@ export const FormController = new Elysia({
     async ({ body, set }) => {
       const { name, email, mobile, address } = body;
       try {
-        // Create a new form document
+        
         const newForm = new FormModel({
           name,
           email,
@@ -17,23 +17,19 @@ export const FormController = new Elysia({
           address,
         });
 
-        // Save the document to the database
-        await newForm.save();
 
-        // Return success set with 201 Created
+        await newForm.save();
         set.status=200
         return { message: "Form submitted successfully" };
       } catch (error:any) {
         console.error("Error saving form data:", error);
 
         if (error.code === 11000) {
-          // Duplicate entry (unique constraint violation)
-          set.status=409; // 409 Conflict
+          set.status=409;
           return { message: "Duplicate entry. Email or mobile already exists." };
         }
 
-        // Return generic error for other issues
-        set.status=500; // 500 Internal Server Error
+        set.status=500;
         return { message: "An internal error occurred while processing the form." };
       }
     },
