@@ -1,5 +1,5 @@
 import { Elysia, t } from "elysia";
-import { FormModel } from "../../../models/user/form"; 
+import { UserModel } from "../../../models/user/form"; 
 
 export const FormController = new Elysia({
   prefix: "/form",
@@ -10,7 +10,7 @@ export const FormController = new Elysia({
       const { name, email, mobile, address } = body;
       try {
         
-        const newForm = new FormModel({
+        const newUser = new UserModel({
           name,
           email,
           mobile,
@@ -18,7 +18,7 @@ export const FormController = new Elysia({
         });
 
 
-        await newForm.save();
+        await newUser.save();
         set.status=200
         return { message: "Form submitted successfully" };
       } catch (error:any) {

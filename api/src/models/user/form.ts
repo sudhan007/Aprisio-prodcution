@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const FormSchema = new Schema(
+const UserSchema = new Schema(
   {
     name: {
       type: String,
@@ -32,4 +32,4 @@ const FormSchema = new Schema(
   { timestamps: true }
 );
 
-export const FormModel = model("User", FormSchema);
+export const UserModel = model("User", UserSchema);
