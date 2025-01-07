@@ -7,6 +7,7 @@ import heroboy from "../../public/images/hero-boy.png";
 import herogirl from "../../public/images/hero-girl.png";
 import avatar from "../../public/images/avatar.png";
 import hearts from "../../public/images/hearts.png";
+import Link from 'next/link';
 
 export default function Hero() {
   const [isZoomedOut, setIsZoomedOut] = useState(false);
@@ -42,12 +43,14 @@ export default function Hero() {
           </div>
         </div>
         <div className={`${isZoomedOut?"pt-[7%]":"pt-[2%]"}`}>
+          <Link href={"/join-community"}>
           <button className="flex lg:py-6 py-3 lg:text-2xl text-xl lg:px-9 px-5 font-mulish font-bold bg-[#C9A74E] rounded-full justify-center items-center gap-5">
             Join Aprisio
             <span className="text-white bg-[#A48D4A] rounded-full p-1">
               <RiArrowRightLine className="w-6 h-6" />
             </span>
           </button>
+          </Link>
         </div>
       </div>
       {isZoomedOut && (

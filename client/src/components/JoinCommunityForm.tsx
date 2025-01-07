@@ -14,6 +14,7 @@ import { GiCheckMark } from 'react-icons/gi';
 import {_axios} from '../lib/_axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import { ImSpinner2 } from "react-icons/im";
 
 interface OTPlessResponse {
     success: boolean;
@@ -50,12 +51,12 @@ const JoinCommunityForm = () => {
   const [token, setToken] = useState<string | null>(null);
 
   const [emailFromParams, setEmailFromParams] = useState<string | null>(null);
-  const [isEmailValid, setIsEmailValid] = useState(false);
+  // const [isEmailValid, setIsEmailValid] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [mobileVerified, setmobileVerified] = useState(false);
 const [emailVerificationSent, setEmailVerificationSent] = useState(false);
-
-const [, setIsVerifying] = useState(false);
+//const [isVerifying, setIsVerifying] = useState(false);
+const[isLoading,setIsLoading]=useState(false)
   const {
     register,
     handleSubmit,
@@ -67,7 +68,7 @@ const [, setIsVerifying] = useState(false);
     resolver: zodResolver(formSchema),
   });
 
-  const emailValue = watch("email");
+  // const emailValue = watch("email");
   const mobileValue = watch("mobile");
   
 
@@ -166,37 +167,37 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
 //     console.error("OTPlessSignin is not available on the window object.");
 //   }
 // };
-const handleSendVerification = async (email: string) => {
-  setIsVerifying(true);
-  try {
-    const response = await _axios.post('/verify/email', { email });
+// const handleSendVerification = async (email: string) => {
+//   setIsVerifying(true);
+//   try {
+//     const response = await _axios.post('/verify/email', { email });
     
-    // Store email verification state in localStorage
-    localStorage.setItem('aprisioEmail', email);
-    localStorage.setItem('verified', 'false');
+//     // Store email verification state in localStorage
+//     localStorage.setItem('aprisioEmail', email);
+//     localStorage.setItem('verified', 'false');
     
-    setEmailVerificationSent(true);
+//     setEmailVerificationSent(true);
 
-    if (response.data.success) {
-      setEmailVerificationSent(true);
-    }
-  } catch (error) {
-    console.error('Error sending verification email:', error);
-  } finally {
-    setIsVerifying(false);
-  }
-};
+//     if (response.data.success) {
+//       setEmailVerificationSent(true);
+//     }
+//   } catch (error) {
+//     console.error('Error sending verification email:', error);
+//   } finally {
+//     setIsVerifying(false);
+//   }
+// };
 
-  useEffect(() => {
-    if (emailValue) {
-      const isValid = z.string().email().safeParse(emailValue).success;
-      setIsEmailValid(isValid);
-      if (!isValid) setEmailVerified(false);
-    } else {
-      setIsEmailValid(false);
-      setEmailVerified(false);
-    }
-  }, [emailValue]);
+  // useEffect(() => {
+  //   if (emailValue) {
+  //     const isValid = z.string().email().safeParse(emailValue).success;
+  //     setIsEmailValid(isValid);
+  //     if (!isValid) setEmailVerified(false);
+  //   } else {
+  //     setIsEmailValid(false);
+  //     setEmailVerified(false);
+  //   }
+  // }, [emailValue]);
 
 
 //   useEffect(() => {
@@ -222,14 +223,15 @@ const handleSendVerification = async (email: string) => {
   }, [mobileValue]);
 
   const onSubmit = async (data: object) => {
-    if (!emailVerified) {
-        toast.error("Please verify your email before submitting.");
-        return;
-    }
-
+    // if (!emailVerified) {
+    //     toast.error("Please verify your email before submitting.");
+    //     return;
+    // }
+    setIsLoading(true)
     try {
         const response = await _axios.post('/form/submit', data);
         if (response.status === 200) {
+          setIsLoading(false)
             toast.success(response.data.message);
             localStorage.removeItem('aprisioEmail');
             localStorage.removeItem('verified');
@@ -238,9 +240,11 @@ const handleSendVerification = async (email: string) => {
             localStorage.removeItem('mobile');
             reset();
         } else {
+          setIsLoading(false)
             toast.error(response.data.message);
         }
     } catch (error) {
+      setIsLoading(false)
         if (error instanceof AxiosError) {
             const errorMessage = error.response?.data?.message || 'An unexpected error occurred.';
             toast.error(errorMessage);
@@ -337,30 +341,34 @@ const handleSendVerification = async (email: string) => {
               errors.email ? "border-red-500" : "border-gray-300"
           } rounded-2xl focus:ring-2 focus:outline-none focus:ring-blue-500`}
         />
-        {isEmailValid  && (
-         <button
-         type="button"
-         onClick={() => handleSendVerification(emailValue)}
-        //  disabled={isLoading}
-         className={`absolute right-3 font-semibold ${
-           emailVerified ? "bg-[#0F8040] text-white lg:text-xl text-base lg:py-3 py-0.5  lg:pl-4 lg:pr-5 pr-3 pl-2" : "bg-[#F0B73F] lg:py-3 lg:px-6 px-2 py-0.5 text-2xl text-[#353535]"
-         } py-3 px-6 lg:top-3  top-[18%] rounded-2xl font-mulish `}
-       >
-         {emailVerified ? (
-           <><p className='flex lg:gap-2 gap-1 items-center'>
-<span className='lg:p-1.5 p-1 md:text-base text-xs rounded-full font-extrabold bg-white text-green-700'>
-<GiCheckMark />
-             </span>
-             <span className='lg:text-[20px] text-[16px]'>Verified</span>
-           </p>
-             
-           </>
-         ) : (
-          <span className='lg:text-[20px] text-[16px]'>Verify</span>
-         )}
-       </button>
-       
-        )}
+   {/* {isEmailValid && (
+  <button
+    type="button"
+    onClick={() => handleSendVerification(emailValue)}
+    // disabled={isLoading} // Uncomment if you want to disable button during loading
+    className={`absolute right-3 font-semibold ${
+      emailVerified
+        ? "bg-[#0F8040] text-white lg:text-xl text-base lg:py-3 py-0.5 lg:pl-4 lg:pr-5 pr-3 pl-2"
+        : "bg-[#F0B73F] lg:py-3 lg:px-6 px-2 py-0.5 text-2xl text-[#353535]"
+    } py-3 px-6 lg:top-3 top-[18%] rounded-2xl font-mulish`}
+  >
+    {emailVerified ? (
+      <p className="flex lg:gap-2 gap-1 items-center">
+        <span className="lg:p-1.5 p-1 md:text-base text-xs rounded-full font-extrabold bg-white text-green-700">
+          <GiCheckMark />
+        </span>
+        <span className="lg:text-[20px] text-[16px]">Verified</span>
+      </p>
+    ) : (
+      isVerifying ? (
+        <span className="lg:text-[20px] cursor-not-allowed flex gap-2 items-center text-[16px]">Verify<ImSpinner2 className="animate-spin " size={20} /></span> 
+      ) : (
+        <span className="lg:text-[20px] text-[16px]">Verify</span> 
+      )
+    )}
+  </button>
+)} */}
+
          {emailVerificationSent && !emailVerified && (
           <p className="text-[#F0B73F] absolute mt-1 text-xs lg:text-sm">We<span>&apos;</span>ve sent the verification link to your given mail id. Please verify your email</p>
         )}
@@ -446,13 +454,21 @@ const handleSendVerification = async (email: string) => {
             <p className="text-red-500 text-sm">{errors.terms.message?.toString()}</p>
           )}
         </div>
-        <div className="flex lg:justify-end  justify-center py-10 lg:py-0">
+        <div className="flex group lg:justify-end  justify-center py-10 lg:py-0">
           <button 
             type="submit" 
-            className="bg-[#043A53] flex gap-5 items-center text-xl text-white font-mulish font-bold py-4 px-7 rounded-full hover:bg-[#e0a93a] transition duration-300"
+            className={`bg-[#043A53] text-xl ${isLoading?'cursor-not-allowed':'group-hover:bg-[#e0a93a]'} text-white font-mulish font-bold py-4 px-7 rounded-full  transition duration-300`}
           >
-            Submit <span className="text-white bg-[#1249628C] p-2 rounded-full"><RiArrowRightLine/></span>
-          </button>
+{
+  isLoading?<>
+          <span className='flex gap-5 items-center '>Submiting <ImSpinner2 className="animate-spin " size={20} />
+  </span>  
+  </>:<>
+  <span className='flex gap-5 items-center '>
+  Submit <span className="text-white bg-[#1249628C] group-hover:bg-black/10 p-2 rounded-full"><RiArrowRightLine/></span>
+  </span>
+  </>
+}          </button>
         </div>
 </div>     
     </form>

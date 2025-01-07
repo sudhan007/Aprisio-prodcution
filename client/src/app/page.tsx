@@ -15,9 +15,11 @@ export default function Home() {
     <>
       <NavBar />
       <ToastContainer />
-      <div id="home">
+      <section id="home" className="pt-5">
+      <div >
         <Hero />
       </div>
+      </section>
       <div id="about">
         <About />
       </div>

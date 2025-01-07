@@ -1,3 +1,5 @@
+'use client';
+
 import Image from "next/image"
 import join from "../../../public/images/retirement.png"
 import { RiArrowDownLine} from "react-icons/ri"
@@ -13,15 +15,22 @@ export default function JoinCommunity(){
         </h1>
       </div>
       <div className="">
-        <div className="flex lg:top-36 lg:left-24 -top-64 items-center justify-center lg:justify-start">     
-          <span className="flex py-5 text-2xl pl-6 pr-4 text-[#353535] font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5">
-            Join Community
-            <span className="text-white bg-[#00000029] rounded-full p-1">
-              <RiArrowDownLine className="w-6 h-6" />
-            </span>
-          </span>
-        </div>
-      </div>
+  <div className="flex lg:top-36 lg:left-24 -top-64 items-center justify-center lg:justify-start">
+    <span
+      className="flex py-5 text-2xl pl-6 pr-4 text-[#353535] font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5 cursor-pointer"
+   onClick={() => {
+  const scrollAmount = window.innerHeight * 0.75; // 60% of the viewport height
+  window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
+}}
+    >
+      Join Community
+      <span className="text-white bg-[#00000029] rounded-full p-1">
+        <RiArrowDownLine className="w-6 h-6" />
+      </span>
+    </span>
+  </div>
+</div>
+
       <div>
         <p className="text-[#043A53] opacity-70 lg:text-left text-center  font-roboto font-medium text-xl">
           Lets join yourself to the community
