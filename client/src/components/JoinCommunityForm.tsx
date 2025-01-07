@@ -10,7 +10,7 @@ import location from "../../public/images/location-icon.png";
 import mail from "../../public/images/mail-icon.png";
 // import Script from 'next/script';
 import { RiArrowRightLine } from 'react-icons/ri';
-import { GiCheckMark } from 'react-icons/gi';
+// import { GiCheckMark } from 'react-icons/gi';
 import {_axios} from '../lib/_axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -52,9 +52,9 @@ const JoinCommunityForm = () => {
 
   const [emailFromParams, setEmailFromParams] = useState<string | null>(null);
   // const [isEmailValid, setIsEmailValid] = useState(false);
-  const [emailVerified, setEmailVerified] = useState(false);
+  // const [emailVerified, setEmailVerified] = useState(false);
   const [mobileVerified, setmobileVerified] = useState(false);
-const [emailVerificationSent, setEmailVerificationSent] = useState(false);
+// const [emailVerificationSent, setEmailVerificationSent] = useState(false);
 //const [isVerifying, setIsVerifying] = useState(false);
 const[isLoading,setIsLoading]=useState(false)
   const {
@@ -89,7 +89,7 @@ const[isLoading,setIsLoading]=useState(false)
         const storedMobile = localStorage.getItem('mobile');
         // Check local storage for aprisioEmail
         const storedEmail = localStorage.getItem('aprisioEmail');
-        const verifiedStatus = localStorage.getItem('verified');
+        // const verifiedStatus = localStorage.getItem('verified');
         // const expirationTime = localStorage.getItem('verificationExpiration');
 
         // const currentTime = new Date().getTime();
@@ -99,7 +99,7 @@ const[isLoading,setIsLoading]=useState(false)
         if (storedMobile) setValue("mobile", storedMobile);
         if (storedEmail) {
             setValue("email", storedEmail);
-            setEmailVerified(verifiedStatus === 'true');
+            // setEmailVerified(verifiedStatus === 'true');
         }
 
         // Call verifyEmail if token and emailParam are present
@@ -127,9 +127,9 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
                 localStorage.setItem('verified', 'true');
                 // const expirationTime = new Date().getTime() + 1 * 60 * 1000; 
                 // localStorage.setItem('verificationExpiration', expirationTime.toString());
-                setEmailVerified(true);
+                // setEmailVerified(true);
                 const timeoutId = setTimeout(() => {
-                  setEmailVerified(false);
+                  // setEmailVerified(false);
                   setValue("email", ""); // Clear the email input
                   localStorage.removeItem('aprisioEmail');
                   localStorage.removeItem('verified');
@@ -369,9 +369,9 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
   </button>
 )} */}
 
-         {emailVerificationSent && !emailVerified && (
+         {/* {emailVerificationSent && !emailVerified && (
           <p className="text-[#F0B73F] absolute mt-1 text-xs lg:text-sm">We<span>&apos;</span>ve sent the verification link to your given mail id. Please verify your email</p>
-        )}
+        )} */}
         {/* {emailVerified && <p className="text-green-500">Verified</p>} */}
         {errors?.email && <p className="absolute text-red-500">{errors.email.message?.toString()}</p>}
       </div>

@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { useRouter, usePathname } from 'next/navigation' // Added usePathname
+import { useRouter, usePathname } from 'next/navigation' 
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import logo from "../../public/images/logo.png"
+import { MouseEvent } from 'react'
 
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
@@ -18,22 +19,21 @@ export default function NavBar() {
   }
 
   const handleNavClick = useCallback(
-    (e) => {
+    (e: MouseEvent<HTMLAnchorElement>) => { 
       e.preventDefault()
-      const targetHref = e.target.getAttribute('href')
-      const targetId = targetHref?.substring(2) // Extract the target ID
-
+      
+      const targetHref = (e.target as HTMLAnchorElement).getAttribute('href')
+      const targetId = targetHref?.substring(2) 
+  
       if (currentPath === '/' && targetId) {
-        // Smooth scroll for the same route
         const targetElement = document.getElementById(targetId)
         if (targetElement) {
           targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
         }
       } else if (targetHref) {
-        // Navigate to the new route
         router.push(targetHref)
       }
-
+  
       if (isDrawerOpen) {
         toggleDrawer()
       }
@@ -69,19 +69,19 @@ export default function NavBar() {
         <div className="hidden lg:block">
           <ul className="flex gap-7 text-[#353535] font-semibold xl:text-2xl lg:text-lg">
             <li>
-              <a href="/#home" onClick={handleNavClick}>Home</a>
+              <Link href="/#home" onClick={handleNavClick}>Home</Link>
             </li>
             <li>
-              <a href="/#about" onClick={handleNavClick}>About Us</a>
+              <Link href="/#about" onClick={handleNavClick}>About Us</Link>
             </li>
             <li>
-              <a href="/#events" onClick={handleNavClick}>Community</a>
+              <Link href="/#events" onClick={handleNavClick}>Community</Link>
             </li>
             <li>
-              <a href="/#join" onClick={handleNavClick}>Job</a>
+              <Link href="/#join" onClick={handleNavClick}>Job</Link>
             </li>
             <li>
-              <a href="/#footer" onClick={handleNavClick}>Contact</a>
+              <Link href="/#footer" onClick={handleNavClick}>Contact</Link>
             </li>
           </ul>
         </div>
@@ -111,19 +111,19 @@ export default function NavBar() {
         <div className="flex flex-col h-full justify-between py-6 px-4">
           <ul className="space-y-4 text-[#353535] font-semibold text-xl">
             <li>
-              <a href="/#home" onClick={handleNavClick}>Home</a>
+              <Link href="/#home" onClick={handleNavClick}>Home</Link>
             </li>
             <li>
-              <a href="/#about" onClick={handleNavClick}>About Us</a>
+              <Link href="/#about" onClick={handleNavClick}>About Us</Link>
             </li>
             <li>
-              <a href="/#events" onClick={handleNavClick}>Community</a>
+              <Link href="/#events" onClick={handleNavClick}>Community</Link>
             </li>
             <li>
-              <a href="/#join" onClick={handleNavClick}>Job</a>
+              <Link href="/#join" onClick={handleNavClick}>Job</Link>
             </li>
             <li>
-              <a href="/#footer" onClick={handleNavClick}>Contact</a>
+              <Link href="/#footer" onClick={handleNavClick}>Contact</Link>
             </li>
           </ul>
           <div className="space-y-4 font-mulish font-semibold text-lg">
