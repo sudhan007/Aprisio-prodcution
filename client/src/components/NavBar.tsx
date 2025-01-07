@@ -8,7 +8,6 @@ import logo from "../../public/images/logo.png"
 
 export default function NavBar() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [bgColor, setBgColor] = useState('bg-transparent')
   const [padding, setPadding] = useState('py-6')
 
   const toggleDrawer = () => {
@@ -26,10 +25,10 @@ export default function NavBar() {
       const scrollPosition = window.scrollY
       const windowHeight = window.innerHeight
       if (scrollPosition > windowHeight * 0.01) {
-        setBgColor('bg-[#F2F5F6]')
+       
         setPadding('py-2')
       } else {
-        setBgColor('bg-transparent')
+        
         setPadding('py-6')
       }
     }
@@ -39,7 +38,7 @@ export default function NavBar() {
   }, [])
 
   return (
-    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 ${bgColor}`}>
+    <nav className={`fixed top-0 z-50 w-full transition-all duration-300 bg-[#F2F5F6] `}>
       <div className={`flex justify-between items-center ${padding} px-5`}>
         <Link href="/" passHref>
           <div>
