@@ -4,8 +4,10 @@ import { FaPause, FaPlay } from "react-icons/fa";
 
 export default function About() {
   const [isPlaying, setIsPlaying] = useState(false); 
+  const [showControls, setShowControls] = useState(false); 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const buttonRef = useRef(null);
+  let timeoutRef = useRef<NodeJS.Timeout | null>(null); 
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -15,12 +17,22 @@ export default function About() {
         videoRef.current.play();
       }
       setIsPlaying(!isPlaying);
+      setShowControls(true);
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        setShowControls(false);
+      }, 500);
     }
   };
 
+  // Fix autoplay on mobile
   useEffect(() => {
     const enableAutoplay = () => {
       if (videoRef.current) {
+        videoRef.current.muted = false; // Mute for autoplay on mobile
         videoRef.current.play().then(() => {
           setIsPlaying(true);
         }).catch(() => {
@@ -37,19 +49,20 @@ export default function About() {
     };
   }, []);
 
+  // Pause when video is out of view
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && isPlaying) {
             videoRef.current?.play().catch(() => {});
-          } else {
+          } else if (!entry.isIntersecting && isPlaying) {
             videoRef.current?.pause();
           }
         });
       },
       {
-        threshold: 0.5,
+        threshold: 0.1,
       }
     );
 
@@ -85,8 +98,12 @@ export default function About() {
         </div>
 
         <div className='w-full h-full flex justify-center items-center'>
-          <div className='w-fit h-fit '>
-            <div className="lg:w-full xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-3xl relative">
+          <div className='w-fit h-fit'>
+            <div 
+              className="lg:w-full xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-3xl relative"
+              onMouseEnter={() => setShowControls(true)} // Show button on hover
+              onMouseLeave={() => setShowControls(false)} // Hide when not hovering
+            >
               <div className='w-fit'>
                 <video
                   className="w-full h-full object-cover rounded-t-2xl"
@@ -95,12 +112,14 @@ export default function About() {
                   autoPlay
                 >
                   <source src="/video/Home_Page Video_140125.mp4" type="video/mp4" />
-                  {/* Your browser does not support the video tag. */}
                 </video>
 
+                {/* Play/Pause Button */}
                 <div className='flex justify-center items-center'>
                   <div
-                    className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-all duration-200"
+                    className={`absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-opacity duration-500 ${
+                      showControls ? "opacity-100" : "opacity-0"
+                    }`}
                   >
                     <div
                       ref={buttonRef}
@@ -108,17 +127,18 @@ export default function About() {
                       className="w-full h-full flex justify-center items-center"
                     >
                       {isPlaying ? (
-                        <button className="w-20 h-20 rounded-full bg-white flex justify-center text-2xl items-center text-[#043A53]">
+                        <button className="lg:w-20 lg:h-20 h-14 w-14 rounded-full bg-white flex justify-center lg:text-2xl text-lg items-center text-[#043A53]">
                           <FaPause />
                         </button> 
                       ) : (
-                        <button className="w-20 h-20 rounded-full bg-white flex justify-center text-2xl items-center text-[#043A53]">
+                        <button className="lg:w-20 lg:h-20 h-14 w-14 rounded-full bg-white flex justify-center lg:text-2xl text-lg items-center text-[#043A53]">
                           <FaPlay />
                         </button> 
                       )}
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
