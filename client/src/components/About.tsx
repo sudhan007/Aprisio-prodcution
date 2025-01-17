@@ -6,8 +6,20 @@ export default function About() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Check screen size on mount and resize
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024); // 1024px is the 'lg' breakpoint in Tailwind
+    };
+
+    checkScreenSize();
+    window.addEventListener('resize', checkScreenSize);
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -25,7 +37,7 @@ export default function About() {
       }
       timeoutRef.current = setTimeout(() => {
         setShowControls(false);
-      }, 500);
+      }, 300);
     }
   };
 
@@ -42,13 +54,11 @@ export default function About() {
 
     const attemptUnmutedAutoplay = async () => {
       try {
-        // Attempt to play unmuted
         video.muted = false;
         await video.play();
         setIsPlaying(true);
         setIsMuted(false);
       } catch {
-        // Fall back to muted autoplay
         video.muted = true;
         await video.play();
         setIsPlaying(true);
@@ -75,17 +85,18 @@ export default function About() {
   }, []);
 
   const handleControlsVisibility = (visible: boolean) => {
+    // Only handle hover events on large screens
+    if (!isLargeScreen) return;
+    
     if (visible) {
       setShowControls(true);
-      // Clear any existing timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
     } else {
-      // Set timeout to hide controls
       timeoutRef.current = setTimeout(() => {
         setShowControls(false);
-      }, 500);
+      }, 300);
     }
   };
 
@@ -143,7 +154,7 @@ export default function About() {
                 </div>
 
                 <div 
-                  className={`absolute lg:bottom-7 lg:right-24 bottom-5 right-20 p-2 rounded text-[#043A53] font-bold  bg-white text-sm transition-opacity duration-300 ${
+                  className={`absolute lg:bottom-7 lg:right-24 bottom-5 right-20 p-2 rounded text-[#043A53] font-bold bg-white text-sm transition-opacity duration-300 ${
                     isMuted ? 'opacity-100' : 'opacity-0'
                   }`}
                 >
@@ -152,7 +163,8 @@ export default function About() {
 
                 <button
                   onClick={handleMuteUnmute}
-                  className={`absolute bottom-4 right-4 lg:w-16 lg:h-16 h-12 w-12 rounded-full bg-white/80 flex justify-center text-lg lg:text-2xl items-center text-[#043A53] transition-opacity duration-300 `}
+                  className={`absolute bottom-4 right-4 lg:w-16 lg:h-16 h-12 w-12 rounded-full bg-white/80 flex justify-center text-lg lg:text-2xl items-center text-[#043A53] transition-opacity duration-300 
+                 `}
                   aria-label={isMuted ? "Unmute video" : "Mute video"}
                 >
                   {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
