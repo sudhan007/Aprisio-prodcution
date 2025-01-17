@@ -1,24 +1,25 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { FaPause, FaPlay } from "react-icons/fa";
+import { FaPause, FaPlay, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 export default function About() {
-  const [isPlaying, setIsPlaying] = useState(false); 
-  const [showControls, setShowControls] = useState(false); 
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const buttonRef = useRef(null);
-  let timeoutRef = useRef<NodeJS.Timeout | null>(null); 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(err => console.log("Playback failed:", err));
       }
       setIsPlaying(!isPlaying);
+      
+      // Show controls and set timeout to hide them
       setShowControls(true);
-
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -28,54 +29,65 @@ export default function About() {
     }
   };
 
-  // Fix autoplay on mobile
+  const handleMuteUnmute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
   useEffect(() => {
-    const enableAutoplay = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = false; // Mute for autoplay on mobile
-        videoRef.current.play().then(() => {
-          setIsPlaying(true);
-        }).catch(() => {
-          console.log("Autoplay failed, waiting for user interaction.");
-        });
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptUnmutedAutoplay = async () => {
+      try {
+        // Attempt to play unmuted
+        video.muted = false;
+        await video.play();
+        setIsPlaying(true);
+        setIsMuted(false);
+      } catch {
+        // Fall back to muted autoplay
+        video.muted = true;
+        await video.play();
+        setIsPlaying(true);
+        setIsMuted(true);
       }
-      document.removeEventListener("click", enableAutoplay);
     };
 
-    document.addEventListener("click", enableAutoplay);
-
-    return () => {
-      document.removeEventListener("click", enableAutoplay);
-    };
-  }, []);
-
-  // Pause when video is out of view
-  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && isPlaying) {
-            videoRef.current?.play().catch(() => {});
-          } else if (!entry.isIntersecting && isPlaying) {
-            videoRef.current?.pause();
+          if (entry.isIntersecting) {
+            attemptUnmutedAutoplay();
+          } else {
+            video.pause();
+            setIsPlaying(false);
           }
         });
       },
-      {
-        threshold: 0.1,
-      }
+      { threshold: 0.2 }
     );
 
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
+    observer.observe(video);
+    return () => observer.unobserve(video);
+  }, []);
 
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
+  const handleControlsVisibility = (visible: boolean) => {
+    if (visible) {
+      setShowControls(true);
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
       }
-    };
-  }, [isPlaying]);
+    } else {
+      // Set timeout to hide controls
+      timeoutRef.current = setTimeout(() => {
+        setShowControls(false);
+      }, 500);
+    }
+  };
 
   return (
     <section className="bg-[#6F7E5F]">
@@ -92,7 +104,7 @@ export default function About() {
 
           <div className="lg:w-1/2 w-full">
             <p className="text-white !leading-relaxed xl:text-3xl lg:text-xl text-lg font-sans">
-              Aprisio is a community of, for and by post career individuals whose careers may be behind them but their best days are ahead of them. This community seeks to explore new opportunities to stay productive, foster new, meaningful connections to stay connected, and pursue new interests to retain their zest for life.
+              Aprisio is a community of, for and by post-career individuals whose careers may be behind them but their best days are ahead of them. This community seeks to explore new opportunities to stay productive, foster new, meaningful connections to stay connected, and pursue new interests to retain their zest for life.
             </p>
           </div>
         </div>
@@ -101,49 +113,46 @@ export default function About() {
           <div className='w-fit h-fit'>
             <div 
               className="lg:w-full xl:h-[614px] flex justify-center lg:h-[414px] h-[280px] rounded-3xl relative"
-              onMouseEnter={() => setShowControls(true)} // Show button on hover
-              onMouseLeave={() => setShowControls(false)} // Hide when not hovering
+              onMouseEnter={() => handleControlsVisibility(true)}
+              onMouseLeave={() => handleControlsVisibility(false)}
             >
               <div className='w-fit'>
                 <video
                   className="w-full h-full object-cover rounded-t-2xl"
                   ref={videoRef}
                   preload="auto"
-                  autoPlay
+                  loop
+                  playsInline
+                  muted={isMuted}
                 >
                   <source src="/video/Home_Page Video_140125.mp4" type="video/mp4" />
                 </video>
 
-                {/* Play/Pause Button */}
-                <div className='flex justify-center items-center'>
-                  <div
-                    className={`absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-opacity duration-500 ${
-                      showControls ? "opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    <div
-                      ref={buttonRef}
+                <div className='absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center'>
+                  <div className="w-full h-full flex justify-center items-center">
+                    <button
                       onClick={handlePlayPause}
-                      className="w-full h-full flex justify-center items-center"
+                      className={`lg:w-20 lg:h-20 h-14 w-14 rounded-full bg-white/80 flex justify-center lg:text-2xl text-lg items-center text-[#043A53] transition-opacity duration-300 ${
+                        showControls ? 'opacity-100' : 'opacity-0'
+                      }`}
+                      aria-label={isPlaying ? "Pause video" : "Play video"}
                     >
-                      {isPlaying ? (
-                        <button className="lg:w-20 lg:h-20 h-14 w-14 rounded-full bg-white flex justify-center lg:text-2xl text-lg items-center text-[#043A53]">
-                          <FaPause />
-                        </button> 
-                      ) : (
-                        <button className="lg:w-20 lg:h-20 h-14 w-14 rounded-full bg-white flex justify-center lg:text-2xl text-lg items-center text-[#043A53]">
-                          <FaPlay />
-                        </button> 
-                      )}
-                    </div>
+                      {isPlaying ? <FaPause /> : <FaPlay />}
+                    </button>
                   </div>
                 </div>
 
+                <button
+                  onClick={handleMuteUnmute}
+                  className={`absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/80 flex justify-center text-xl items-center text-[#043A53] transition-opacity duration-300 `}
+                  aria-label={isMuted ? "Unmute video" : "Mute video"}
+                >
+                  {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
+                </button>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
