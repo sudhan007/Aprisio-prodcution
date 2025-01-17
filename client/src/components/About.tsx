@@ -142,9 +142,17 @@ export default function About() {
                   </div>
                 </div>
 
+                <div 
+                  className={`absolute lg:bottom-7 lg:right-24 bottom-5 right-20 p-2 rounded text-[#043A53] font-bold  bg-white text-sm transition-opacity duration-300 ${
+                    isMuted ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  Tap to unmute
+                </div>
+
                 <button
                   onClick={handleMuteUnmute}
-                  className={`absolute bottom-4 right-4 w-10 h-10 rounded-full bg-white/80 flex justify-center text-xl items-center text-[#043A53] transition-opacity duration-300 `}
+                  className={`absolute bottom-4 right-4 lg:w-16 lg:h-16 h-12 w-12 rounded-full bg-white/80 flex justify-center text-lg lg:text-2xl items-center text-[#043A53] transition-opacity duration-300 `}
                   aria-label={isMuted ? "Unmute video" : "Mute video"}
                 >
                   {isMuted ? <FaVolumeMute /> : <FaVolumeUp />}
