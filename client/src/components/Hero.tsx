@@ -46,7 +46,7 @@ export default function Hero() {
           <Link href={"/join-community"}>
           <button className="flex lg:py-6 py-3 lg:text-2xl text-xl lg:px-9 px-5 font-mulish font-bold bg-[#C9A74E] rounded-full justify-center items-center gap-5">
             Join Aprisio
-            <span className="text-white bg-[#A48D4A] rounded-full p-1">
+            <span className="text-white bg-[#A48D4A]  rounded-full mt-1 p-1">
               <RiArrowRightLine className="w-6 h-6" />
             </span>
           </button>
