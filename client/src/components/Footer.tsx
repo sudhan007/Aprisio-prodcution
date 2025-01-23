@@ -71,7 +71,7 @@ export default function Footer() {
                 </div>
                 <p className="md:text-xl text-base ">Privacy Policy , Terms & Conditions</p>
                 <p className="md:block hidden">
-                    2024
+                    2025
                 </p>
             </div>
         </section>

@@ -27,7 +27,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative lg:mt-36 mt-28 lg:h-[90vh] px-2 lg:px-0 mb-14 lg:mb-0">
+    <section className="relative overflow-x-hidden lg:mt-36 mt-28  px-2 lg:h-[100%] lg:px-0 mb-14 lg:mb-0">
       <div className="flex flex-col justify-center items-center">
         <div className="flex flex-col justify-center items-center w-[90%]">
           <h1 className="font-semibold text-[#353535] text-center xl:text-[75px] lg:text-[60px] text-[24px] font-roboto">
@@ -53,6 +53,17 @@ export default function Hero() {
           </Link>
         </div>
       </div>
+      <div className={`  relative lg:left-16 lg:pb-20 mt-16 lg:mt-12 ${isZoomedOut?"lg:bottom-[0%]":"lg:bottom-[0%]"}  flex lg:flex-row flex-col items-center`}>
+        <Image src={avatar} alt="" className="xl:h-24 xl:w-80 lg:w-60 lg:h-20 w-36 h-12" />
+        <div className="flex mt-5 lg:mt-0 justify-center items-center">
+          <h1 className="font-bold text-[#B9932E] font-lato xl:text-6xl lg:text-4xl text-3xl px-4">
+            2M
+          </h1>
+          <p className="text-[#353535CC] xl:text-3xl lg:text-2xl text-xl font-sans">
+            Users are in the Aprisio
+          </p>
+        </div>
+      </div>
       {isZoomedOut && (
         <>
           <div className="absolute lg:right-[2%] lg:top-[10%] top-[55%] right-3">
@@ -66,22 +77,13 @@ export default function Hero() {
           </div>
         </>
       )}
+      
       <div className="absolute -z-10 hidden lg:block right-0 bottom-0">
         <div className="flex justify-end">
           <Image src={hero} alt="hero" className={`${isZoomedOut?"lg:h-[80%] lg:w-[80%] xl:h-full xl:w-full":"lg:h-[80%] lg:w-[80%] xl:h-[80%] xl:w-[80%]"}`} />
         </div>
       </div>
-      <div className={`lg:absolute lg:left-16 mt-16 lg:mt-0 ${isZoomedOut?"lg:bottom-[10%]":"lg:bottom-[0%]"}  flex lg:flex-row flex-col items-center`}>
-        <Image src={avatar} alt="" className="xl:h-24 xl:w-80 lg:w-60 lg:h-20 w-36 h-12" />
-        <div className="flex mt-5 lg:mt-0 justify-center items-center">
-          <h1 className="font-bold text-[#B9932E] font-lato xl:text-6xl lg:text-4xl text-3xl px-4">
-            2M
-          </h1>
-          <p className="text-[#353535CC] xl:text-3xl lg:text-2xl text-xl font-sans">
-            Users are in the Aprisio
-          </p>
-        </div>
-      </div>
+    
     </section>
   );
 }

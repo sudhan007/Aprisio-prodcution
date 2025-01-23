@@ -68,7 +68,7 @@ export default function Join(){
       </div>
             <div className="absolute inset-0 flex xl:top-36 lg:top-28 xl:left-24 lg:left-14 md:-top-[54%]  -top-64 items-center justify-center lg:justify-start">
               <Link href={"/join-community"}> 
-        <span className="flex py-5 text-2xl pl-6 pr-4 font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5">
+        <span className="flex py-5 text-2xl pl-6 pr-4 font-mulish font-bold bg-[#F0B73F] hover:bg-[#f8cd71] hover:border-[#eba50d]  hover:border-[5px] rounded-full justify-center items-center gap-5">
           Join Community
           <span className="text-white bg-[#00000029] rounded-full p-1">
             <RiArrowRightLine className="w-6 h-6" />

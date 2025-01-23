@@ -121,7 +121,7 @@ export default function FAQ2() {
    Our Milestone
    </h1>
    <p className="text-[#353535CC] pt-7 xl:text-2xl text-xl">
-   Lorem incididunt Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. 
+   Aprisio celebrates milestones of growth, connection, and exploration, empowering post-career individuals to embrace new opportunities, build meaningful relationships, and live with renewed passion and purpose.
    </p>
     </div>
     <div className="flex absolute w-full top-[60%] justify-around">
@@ -160,7 +160,7 @@ Job Provided
    Our Milestone
    </h1>
    <p className="text-[#353535CC] lg:pt-7 pt-3 font-mulish lg:text-2xl text-base">
-   Lorem incididunt Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt eiusmod eiusmod culpa. 
+   Aprisio celebrates milestones of growth, connection, and exploration, empowering post-career individuals to embrace new opportunities, build meaningful relationships, and live with renewed passion and purpose.
    </p>
     </div>
     <div className="flex w-full flex-wrap justify-evenly  items-center">

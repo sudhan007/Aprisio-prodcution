@@ -9,22 +9,22 @@ const testimonials = [
   {
     id: 1,
     rectImage: rect1,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim .adipiscing elit, sed do eiusmod tempor incididunt ued do eiusmod tempor incididunt ut labore",
-    name: "User Name",
+    text: "Aprisio has opened doors to new friendships and exciting opportunities. I feel more engaged and purposeful than ever before!",
+    name: "Sarah M",
     location: "Banglore",
   },
   {
     id: 2,
     rectImage: rect2,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim .adipiscing elit, sed do eiusmod tempor incididunt ued do eiusmod tempor incididunt ut labore",
-    name: "User Name",
+    text: "Joining Aprisio has reignited my passion for learning and connecting. It’s a community that truly values personal growth and connection.",
+    name: "Thakar L",
     location: "Banglore",
   },
   {
     id: 3,
     rectImage: rect3,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim .adipiscing elit, sed do eiusmod tempor incididunt ued do eiusmod tempor incididunt ut labore",
-    name: "User Name",
+    text: "Through Aprisio, I’ve discovered new interests and built lasting relationships. It’s the perfect space to stay active and inspired after retirement.",
+    name: "Sharma T",
     location: "Banglore",
   },
 ];
@@ -38,11 +38,11 @@ export default function Testimonial() {
         </h1>
       </div>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10 relative">
-        {Array(2)
+        {Array(1)
           .fill(null)
           .map((_, index) =>
             testimonials.map((testimonial) => (
-              <div key={`${index}-${testimonial.id}`} className="relative">
+              <div key={`${index}-${testimonial.id}`} className="relative ">
                 <div className="bg-white rounded-3xl ">
                   <div className="pt-9 px-9">
                     <Image src={quote} alt="quote" className="xl:h-9 xl:w-9 w-6 h-6" />
@@ -54,7 +54,7 @@ export default function Testimonial() {
                       className="h-16 w-16 absolute left-4 xl:top-24 lg:top-20"
                     />
                   </div>
-                  <p className="text-[#353535] px-9 xl:text-2xl lg:text-base text-xl font-sans py-6 z-10 relative">
+                  <p className="text-[#353535] min-h-56 px-9 xl:text-2xl lg:text-base text-xl font-sans py-6 z-10 relative">
                     {testimonial.text}
                   </p>
                   <hr className="bg-[#E9E9E9] h-0.5 w-full" />

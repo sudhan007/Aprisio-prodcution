@@ -15,16 +15,16 @@ export default function JoinCommunity(){
         </h1>
       </div>
       <div className="">
-  <div className="flex lg:top-36 lg:left-24 -top-64 items-center justify-center lg:justify-start">
+  <div className="flex lg:top-36 lg:left-24  -top-64 items-center justify-center lg:justify-start">
     <span
-      className="flex py-5 text-2xl pl-6 pr-4 text-[#353535] font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5 cursor-pointer"
+      className="flex py-5 text-2xl pl-6 pr-4 text-[#353535] hover:scale-110 transition-all duration-300  font-mulish font-bold bg-[#F0B73F] rounded-full justify-center items-center gap-5 cursor-pointer"
    onClick={() => {
   const scrollAmount = window.innerHeight * 0.75; // 60% of the viewport height
   window.scrollBy({ top: scrollAmount, behavior: 'smooth' });
 }}
     >
       Join Community
-      <span className="text-white bg-[#00000029] rounded-full p-1">
+      <span className="text-white  bg-[#00000029] rounded-full p-1">
         <RiArrowDownLine className="w-6 h-6" />
       </span>
     </span>
@@ -46,9 +46,9 @@ export default function JoinCommunity(){
     <h1 className="lg:text-8xl text-3xl pt-5 font-bold text-center font-mulish">
       Join Community
     </h1>
-    <p className="font-mulish lg:text-2xl text-xl font-light">
+    {/* <p className="font-mulish lg:text-2xl text-xl font-light">
       Lorem incididunt Mollit in laborum tempor Lorem incididunt irure. Aute eu ex ad sunt. Pariatur sint culpa do incididunt 
-    </p>
+    </p> */}
   </div>
   <div>
     <JoinCommunityForm />

@@ -457,7 +457,7 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
         <div className="flex group lg:justify-end  justify-center py-10 lg:py-0">
           <button 
             type="submit" 
-            className={`bg-[#043A53] text-xl ${isLoading?'cursor-not-allowed':'group-hover:bg-[#e0a93a]'} text-white font-mulish font-bold py-4 px-7 rounded-full  transition duration-300`}
+            className={`bg-[#043A53] text-xl ${isLoading?'cursor-not-allowed':'group-hover:bg-[#e0a93a] hover:scale-110 transition-all duration-300'} text-white font-mulish font-bold py-4 px-7 rounded-full  transition duration-300`}
           >
 {
   isLoading?<>
