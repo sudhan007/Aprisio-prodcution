@@ -63,14 +63,15 @@ const[isLoading,setIsLoading]=useState(false)
     setValue,
     watch,
     reset,
+    trigger,
     formState: { errors },
   } = useForm({
     resolver: zodResolver(formSchema),
   });
 
+
   // const emailValue = watch("email");
   const mobileValue = watch("mobile");
-  
 
 
   useEffect(() => {
@@ -111,6 +112,9 @@ const[isLoading,setIsLoading]=useState(false)
 
 const handleInputChange = (field: string, value: string) => {
   localStorage.setItem(field, value);
+  // toast.success(field)
+  // trigger("name")
+
 };
 
 
@@ -320,7 +324,7 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
         <input
           {...register("name")}
           type="text"
-          onChange={(e) => handleInputChange('name', e.target.value)} 
+          // onChange={(e) => handleInputChange('name', e.target.value)} 
           placeholder="Name"
           className={`w-full lg:text-xl text-sm lg:pl-20 pl-10 pr-3 py-2 lg:h-20 h-[60px] border ${
             errors.name ? 'border-red-500' : 'border-gray-300'
@@ -381,7 +385,7 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
         <Image src={mobile} alt="mobile" className="absolute lg:left-[5%] left-2  top-[50%] transform -translate-y-1/2 w-6 h-6" />
         <input
           {...register("mobile")}
-          onChange={(e) => handleInputChange('mobile', e.target.value)} 
+          // onChange={(e) => handleInputChange('mobile', e.target.value)} 
           type="text"
           placeholder="mobile"
           inputMode="numeric"
@@ -413,7 +417,7 @@ const verifyEmail = async (tokenParam: string, emailParam: string | null) => {
         <input
           {...register("address")}
           type="text"
-          onChange={(e) => handleInputChange('address', e.target.value)} 
+          // onChange={(e) => handleInputChange('address', e.target.value)} 
           placeholder="Address"
           className={`w-full lg:text-xl text-base lg:pl-20 pl-10 py-2  pr-3 lg:h-20 h-[60px] border ${
             errors.address ? "border-red-500" : "border-gray-300"
